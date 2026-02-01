@@ -30,7 +30,7 @@
       font-family: 'Kode Mono', monospace;
     }
 
-    /* --- NOWY GRID PATTERN (Zgodnie z życzeniem) --- */
+    /* --- GRID PATTERN --- */
     .bg-grid-pattern {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg stroke='%233d4a5f' stroke-width='0.5' fill='none' opacity='0.2'%3E%3Cpath d='M0 .5h32M.5 0v32'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 32px 32px;
@@ -42,14 +42,13 @@
       -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
     }
 
-    /* --- PŁYNNE PRZEJŚCIA (FADES) - ULEPSZONE (NON-LINEAR) --- */
+    /* --- PŁYNNE PRZEJŚCIA (FADES) --- */
     .section-fade-top-transparent {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 120px; /* Zwiększamy wysokość dla łagodniejszego efektu */
-      /* Easing gradient zamiast zwykłego linear-gradient */
+      height: 120px;
       background: linear-gradient(
         to bottom,
         rgba(5, 8, 16, 1) 0%,
@@ -75,7 +74,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 120px; /* Zwiększamy wysokość */
+      height: 120px;
       background: linear-gradient(
         to top,
         rgba(5, 8, 16, 1) 0%,
@@ -96,7 +95,7 @@
       z-index: 2;
     }
 
-    /* --- PRZYCISKI SHINY CTA (Styl nienaruszony) --- */
+    /* --- PRZYCISKI SHINY CTA (Dla nawigacji i hero) --- */
     @property --gradient-angle {
       syntax: "<angle>";
       initial-value: 0deg;
@@ -131,6 +130,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 9999px;
+      /* Padding dla standardowych przycisków */
       padding: 14px 32px;
       font-size: 0.875rem;
       line-height: 1.5;
@@ -644,8 +644,7 @@
       </div>
     </div>
   </section>
-
-  <section id="contact" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 pb-32 border-t border-slate-800/50 bg-[#050810]">
+<section id="contact" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 pb-32 border-t border-slate-800/50 bg-[#050810]">
     <div class="section-fade-top-transparent"></div>
     <div class="relative">
       <div class="relative max-w-2xl mx-auto text-center mb-12">
@@ -658,39 +657,51 @@
         </p>
       </div>
 
-      <form action="https://formsubmit.co/.com" method="POST" class="space-y-6">
+      <div class="w-full max-w-3xl mx-auto">
+          <div class="md:p-10 bg-[#0a0f1c] border-slate-800 border rounded-[2rem] pt-8 pr-8 pb-8 pl-8 relative shadow-2xl backdrop-blur-sm">
 
-  <input type="hidden" name="_captcha" value="false">
-  
-  <input type="hidden" name="_subject" value="Nowe zgłoszenie ze strony (Automation Hero)">
-  
-  <input type="text" name="_honey" style="display:none">
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="space-y-2">
-      <label for="name" class="text-xs uppercase tracking-wider font-medium text-slate-400 ml-1">Imię</label>
-      <input type="text" id="name" name="name" required placeholder="Jan Kowalski" class="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
-    </div>
-    <div class="space-y-2">
-      <label for="email" class="text-xs uppercase tracking-wider font-medium text-slate-400 ml-1">Email</label>
-      <input type="email" id="email" name="email" required placeholder="jan@firma.pl" class="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
-    </div>
-  </div>
+            <form id="contact-form" class="space-y-6">
+              <input type="hidden" name="access_key" value="30440102-a221-4e4e-9e5d-dd2b9efe9a40">
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+              <input type="hidden" name="subject" value="Nowe zgłoszenie (Automation Hero)">
 
-  <div class="space-y-2">
-    <label for="company" class="text-xs uppercase tracking-wider font-medium text-slate-400 ml-1">Firma</label>
-    <input type="text" id="company" name="company" placeholder="Nazwa Firmy" class="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
-  </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label for="name" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Imię</label>
+                  <input type="text" id="name" name="name" required="" placeholder="Jan Kowalski" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
+                </div>
+                <div class="space-y-2">
+                  <label for="email" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Email</label>
+                  <input type="email" id="email" name="email" required="" placeholder="jan@firma.pl" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
+                </div>
+              </div>
 
-  <div class="space-y-2">
-    <label for="message" class="text-xs uppercase tracking-wider font-medium text-slate-400 ml-1">Wiadomość</label>
-    <textarea id="message" name="message" required rows="4" placeholder="Opowiedz mi o swoich celach automatyzacji..." class="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200 resize-none"></textarea>
-  </div>
+              <div class="space-y-2">
+                <label for="company" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Firma</label>
+                <input type="text" id="company" name="company" placeholder="Nazwa Firmy" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
+              </div>
 
-  <button type="submit" class="shiny-cta w-full mt-2">
-    <span>Umów Sesję Strategiczną</span>
-  </button>
-</form>
+              <div class="space-y-2">
+                <label for="message" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Wiadomość</label>
+                <textarea id="message" name="message" required="" rows="4" placeholder="Opowiedz mi o swoich celach automatyzacji..." class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200 resize-none"></textarea>
+              </div>
+
+              <div class="pt-4">
+                <button type="submit" id="submit-btn" class="shiny-cta w-full group relative flex justify-center items-center overflow-hidden rounded-full bg-[#050810] p-[1px] transition-transform active:scale-95 hover:scale-105 duration-200 shadow-[0_0_20px_rgba(45,212,191,0.3)]">
+                        <span class="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#1e40af_0%,#2dd4bf_15%,#1e40af_30%,transparent_40%,transparent_100%)]"></span>
+                        <span class="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#050810] px-6 py-4 text-sm font-semibold text-white backdrop-blur-3xl">
+                            <span class="absolute inset-0 bg-gradient-to-tr from-transparent via-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                            <span id="btn-text" class="relative flex items-center gap-2 font-['Roboto_Slab']  tracking-wider text-xs">
+                                Umów Sesję Strategiczną
+                            </span>
+                        </span>
+                      </button>
+              </div>
+
+              <p id="result-message" class="text-center text-sm font-medium mt-4 h-6 opacity-0 transition-opacity duration-300 text-teal-400">
+              </p>
+            </form>
+          </div>
       </div>
     </div>
   </section>
@@ -723,6 +734,75 @@
             icon.style.transform = 'rotate(180deg)';
           }
         });
+      });
+    });
+
+    // LOGIKA WEB3FORMS (Bez przeładowania strony)
+    const form = document.getElementById('contact-form');
+    const result = document.getElementById('result-message');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Zmiana tekstu przycisku na czas wysyłki
+      const originalText = btnText.innerText;
+      btnText.innerText = "Wysyłanie...";
+      submitBtn.disabled = true;
+
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      result.innerHTML = "";
+      result.classList.remove('opacity-100');
+      result.classList.add('opacity-0');
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+          result.innerHTML = "Wiadomość wysłana pomyślnie!";
+          result.classList.remove('text-red-500');
+          result.classList.add('text-teal-400');
+          result.classList.remove('opacity-0');
+          result.classList.add('opacity-100');
+          form.reset(); // Czyści formularz
+        } else {
+          console.log(response);
+          result.innerHTML = json.message;
+          result.classList.remove('text-teal-400');
+          result.classList.add('text-red-500');
+          result.classList.remove('opacity-0');
+          result.classList.add('opacity-100');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        result.innerHTML = "Wystąpił błąd. Spróbuj ponownie później.";
+        result.classList.remove('text-teal-400');
+        result.classList.add('text-red-500');
+        result.classList.remove('opacity-0');
+        result.classList.add('opacity-100');
+      })
+      .finally(() => {
+        // Przywrócenie przycisku
+        btnText.innerText = originalText;
+        submitBtn.disabled = false;
+        
+        // Ukrycie komunikatu po 5 sekundach
+        setTimeout(() => {
+          result.classList.remove('opacity-100');
+          result.classList.add('opacity-0');
+        }, 5000);
       });
     });
   </script>
