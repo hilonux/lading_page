@@ -576,131 +576,269 @@
     </div>
     <div class="section-fade-bottom-transparent"></div>
   </section>
-
-
- <div id="projects" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-0 pb-24 bg-transparent">
+<div id="projects" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-0 pb-24 bg-transparent">
     
     <h2 class="text-4xl md:text-5xl text-center mb-16 tracking-tight text-white font-semibold relative z-20 drop-shadow-2xl">
       Ostatnie Projekty Techniczne
     </h2>
 
     <div class="flex flex-col gap-6 max-w-4xl mx-auto relative">
-      <div class="group sticky top-24 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
-        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">
-            2025
-          </span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">
-            Next.js, Supabase & AI
-          </span>
-        </div>
 
+      <!-- PROJEKT 1: Inteligentny Asystent Email -->
+      <div onclick="openModal('email-assistant')" class="group sticky top-24 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">n8n, RAG & Gmail API</span>
+        </div>
         <div class="flex justify-between items-end">
           <div class="max-w-xl">
             <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              <a href="https://bibleaura.xyz" target="_blank" class="hover:underline decoration-teal-500/50 underline-offset-4">
-                Bible Aura – Asystent AI
-              </a>
+              Inteligentny Asystent Email
             </h3>
             <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              Zaprojektowałem kompleksowego asystenta do studiowania Biblii opartego na AI,
-              oferującego inteligentne wyszukiwanie wersetów, kontekstowe odpowiedzi i
-              odkrywanie tematów.
+              System "wsparcia w tle", który analizuje przychodzące maile i generuje gotowe drafty odpowiedzi w oparciu o bazę wiedzy firmy.
             </p>
             <div class="flex gap-12 text-slate-300">
               <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Inteligentne</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Wyszukiwanie</div>
+                <div class="text-lg font-semibold text-teal-400">Oszczędność</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Czasu 90%</div>
               </div>
               <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Kontekstowe</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Odpowiedzi AI</div>
+                <div class="text-lg font-semibold text-teal-400">Pełna</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Kontrola</div>
               </div>
             </div>
           </div>
           <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="book-open" aria-hidden="true" class="lucide lucide-book-open w-6 h-6"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-6 h-6"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
           </div>
         </div>
       </div>
 
-      <div class="group sticky top-28 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+      <!-- PROJEKT 2: Głosowy Asystent Inwentaryzacji -->
+      <div onclick="openModal('telegram-inventory')" class="group sticky top-28 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
         <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">
-            2025
-          </span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">
-            AI Voice Agents
-          </span>
+          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Telegram Bot & AI</span>
         </div>
-
         <div class="flex justify-between items-end">
           <div class="max-w-xl">
             <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              <a href="https://www.cedarglobalgroup.com/" target="_blank" class="hover:underline decoration-teal-500/50 underline-offset-4">
-                Cedra Global – Voice AI
-              </a>
+              Głosowy Asystent Inwentaryzacji
             </h3>
             <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              Wdrożyłem inteligentnych agentów głosowych opartych na AI do automatyzacji
-              obsługi klienta i procesów biznesowych.
+              Bot na Telegramie, który zamienia wiadomości głosowe w strukturalne dane w Google Sheets – bez przepisywania.
             </p>
             <div class="flex gap-12 text-slate-300">
               <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Automatyzacja</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Procesów</div>
+                <div class="text-lg font-semibold text-teal-400">Zero</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Przepisywania</div>
               </div>
               <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Realistyczne</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Agenty Głosowe</div>
+                <div class="text-lg font-semibold text-teal-400">Głosowe</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Dyktowanie</div>
               </div>
             </div>
           </div>
           <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mic" aria-hidden="true" class="lucide lucide-mic w-6 h-6"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic w-6 h-6"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
           </div>
         </div>
       </div>
       
-       <div class="group sticky top-32 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+      <!-- PROJEKT 3: Facebook Scraper -->
+      <div onclick="openModal('facebook-scraper')" class="group sticky top-32 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
         <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">
-            2024
-          </span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">
-            Python & SQL
-          </span>
+          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Web Scraping & AI</span>
         </div>
-
         <div class="flex justify-between items-end">
           <div class="max-w-xl">
             <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              Platforma Analizy Danych
+              Automat Pozyskiwania Ofert
             </h3>
             <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              Zbudowałem solidną platformę analityczną do eksploracji i analizy danych,
-              która ekstrahuje praktyczne insights z złożonych zbiorów danych. Wykonałem
-              czyszczenie, transformację i wizualizację danych dla wsparcia decyzyjnego.
+              Bot, który codziennie przeczesuje grupy na Facebooku, filtruje oferty sprzedaży i wyciąga dane kontaktowe do bazy.
             </p>
             <div class="flex gap-12 text-slate-300">
               <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Wizualizacja</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Złożonych Danych</div>
+                <div class="text-lg font-semibold text-teal-400">Automatyczna</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Selekcja</div>
               </div>
               <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Praktyczne</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Insights</div>
+                <div class="text-lg font-semibold text-teal-400">Gotowa</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Baza Leadów</div>
               </div>
             </div>
           </div>
           <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-2" aria-hidden="true" class="lucide lucide-bar-chart-2 w-6 h-6"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-6 h-6"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJEKT 4: Google Maps Leads -->
+      <div onclick="openModal('maps-leads')" class="group sticky top-36 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Apify & Google Maps API</span>
+        </div>
+        <div class="flex justify-between items-end">
+          <div class="max-w-xl">
+            <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
+              Automatyczne Leady z Google Maps
+            </h3>
+            <p class="text-slate-400 mb-8 font-medium leading-relaxed">
+              System, który masowo skanuje Google Maps i strony firm, wyciągając telefony, maile i adresy do Google Sheets.
+            </p>
+            <div class="flex gap-12 text-slate-300">
+              <div class="group-hover:translate-x-2 transition-transform duration-300">
+                <div class="text-lg font-semibold text-teal-400">Masowa</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Skala</div>
+              </div>
+              <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
+                <div class="text-lg font-semibold text-teal-400">Email +</div>
+                <div class="text-sm text-slate-500 mt-1 font-medium">Telefon</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-6 h-6"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
           </div>
         </div>
       </div>
 
     </div>
-  </div>
+</div>
+
+<div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeModal()" class="absolute inset-0 bg-[#050810]/90 backdrop-blur-md transition-opacity duration-300"></div>
+    
+    <div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0a0f1c] border border-slate-800 rounded-3xl shadow-2xl shadow-black">
+        
+        <div class="sticky top-0 z-10 flex justify-between items-center p-6 border-b border-slate-800 bg-[#0a0f1c]/95 backdrop-blur">
+            <h3 id="modal-title" class="text-2xl md:text-3xl font-semibold text-white"></h3>
+            <button onclick="closeModal()" class="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="p-8 md:p-12 space-y-10">
+            
+            <div>
+                <div class="flex flex-wrap gap-3 mb-6" id="modal-tags"></div>
+                <p id="modal-desc" class="text-lg text-slate-300 leading-relaxed font-light"></p>
+            </div>
+
+            <hr class="border-slate-800/50">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-3">
+                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold">Problem</span>
+                    <p id="modal-problem" class="text-sm md:text-base text-slate-400 leading-relaxed"></p>
+                </div>
+                <div class="space-y-3">
+                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold">Rozwiązanie</span>
+                    <p id="modal-solution" class="text-sm md:text-base text-slate-400 leading-relaxed"></p>
+                </div>
+                <div class="space-y-3">
+                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold">Efekt</span>
+                    <p id="modal-effect" class="text-sm md:text-base text-slate-400 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900/50 h-64 flex items-center justify-center">
+                <span class="text-slate-600 font-mono text-sm">[Miejsce na screen automatyzacji]</span>
+            </div>
+            
+            <div class="text-center pt-4">
+                 <a href="#contact" onclick="closeModal()" class="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors border-b border-teal-500/30 hover:border-teal-400 pb-1">
+                    Zapytaj o podobne wdrożenie <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                 </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const projectsData = {
+        'email-assistant': {
+            title: 'Inteligentny Asystent Email',
+            desc: 'System "wsparcia w tle", który analizuje przychodzące maile i generuje gotowe drafty odpowiedzi w oparciu o bazę wiedzy firmy. Nie wysyła wiadomości automatycznie – zachowujesz pełną kontrolę nad każdą odpowiedzią.',
+            tags: ['n8n', 'OpenAI (RAG)', 'Gmail API', 'Vector Store'],
+            problem: 'Ręczne odpisywanie na powtarzające się pytania klientów zajmuje pół dnia roboczego. Gotowe szablony "kopiuj-wklej" brzmią sztucznie i nie odpowiadają na konkretne potrzeby zawarte w danej wiadomości.',
+            solution: 'System analizuje treść każdego przychodzącego maila, przeszukuje wgraną bazę wiedzy firmy (cenniki, procedury, FAQ) i generuje merytoryczną odpowiedź. Odpowiedź odnosi się do konkretnych pytań i zachowuje naturalny, ludzki ton.',
+            effect: 'Wchodzisz rano na pocztę i w folderze "Wersje robocze" czekają gotowe odpowiedzi. Rzucasz okiem, ewentualnie robisz drobną korektę i klikasz "Wyślij". Oszczędzasz 80-90% czasu, zachowując pełną kontrolę nad komunikacją.'
+        },
+        'telegram-inventory': {
+            title: 'Głosowy Asystent Inwentaryzacji',
+            desc: 'Bot na Telegramie, który zamienia wiadomości głosowe w strukturalne dane w arkuszu kalkulacyjnym. Nie musisz nic wpisywać – po prostu mówisz do telefonu, co spisałeś w magazynie.',
+            tags: ['Telegram Bot API', 'Speech-to-Text', 'Google Sheets', 'NLP'],
+            problem: 'Inwentaryzacja w restauracji, magazynie czy sklepie to podwójna praca: najpierw spisujesz braki na kartce podczas obchodu, potem siadasz do komputera i przez godzinę przepisujesz wszystko do Excela. To strata czasu i ryzyko błędów.',
+            solution: 'Idziesz przez magazyn i mówisz do telefonu: "Zostało 5 kartonów mleka, 3 kilo kurczaka, trzeba domówić pomidory". System automatycznie: przetwarza nagranie na tekst, rozpoznaje produkty i ilości, umieszcza dane w odpowiednich kolumnach Google Sheets.',
+            effect: 'Inwentaryzacja kończy się w momencie wysłania ostatniej wiadomości na Telegramie. Dane są od razu w systemie, bez potrzeby siedzenia przy komputerze i przepisywania. Oszczędność czasu i eliminacja błędów.'
+        },
+        'facebook-scraper': {
+            title: 'Automat Pozyskiwania Ofert',
+            desc: 'Bot, który codziennie o ustalonej godzinie przeczesuje wskazane grupy na Facebooku, automatycznie odrzuca ogłoszenia wynajmu, a oferty sprzedaży wraz z danymi kontaktowymi zapisuje do bazy.',
+            tags: ['Facebook API', 'Web Scraping', 'Airtable', 'n8n'],
+            problem: 'Agenci nieruchomości tracą godziny na ręczne przeglądanie setek grup na Facebooku, próbując wyłowić oferty sprzedaży mieszkań spośród tysięcy ogłoszeń o wynajmie i spamu. W tej masie łatwo przeoczyć wartościowy lead.',
+            solution: 'Bot codziennie rano skanuje wskazane grupy FB. Automatycznie odrzuca wszystko związane z wynajmem i skupia się tylko na sprzedaży. "Czyta" posty i wyciąga: numer telefonu, link do ogłoszenia, treść opisu. Dane trafiają do tabeli (Airtable/Excel).',
+            effect: 'Agent zaczyna dzień z gotową listą nowych, potencjalnych klientów do kontaktu. Zamiast szukać igły w stogu siana, dostaje na tacy tylko te ogłoszenia, które realnie mogą przynieść zysk. Oszczędność czasu i większa skuteczność.'
+        },
+        'maps-leads': {
+            title: 'Automatyczne Leady z Google Maps',
+            desc: 'System, który masowo skanuje Google Maps i strony internetowe firm, wyciągając telefony, maile i adresy. Wszystko ląduje automatycznie w Google Sheets – gotowa baza do cold outreach.',
+            tags: ['Apify', 'Google Maps API', 'Web Scraping', 'Google Sheets'],
+            problem: 'Ręczne szukanie klientów B2B to żmudna praca: wchodzisz na Google Maps, wpisujesz "restauracje Gdańsk", klikasz w każdą wizytówkę i przepisujesz telefon do Excela. Zajmuje to godziny, a wizytówki często nie mają maila.',
+            solution: 'Definiujesz cel: "Znajdź wszystkie restauracje w Gdańsku". System sam: skanuje mapy i wyciąga podstawowe dane (nazwa, telefon, adres), wchodzi na stronę www każdej firmy i "doczytuje" maile, zapisuje wszystko w uporządkowanym arkuszu Google Sheets.',
+            effect: 'Zamiast tracić czas na research, zespół handlowy dostaje gotową, świeżą listę potencjalnych klientów. Proces można ustawić tak, by działał codziennie w tle i automatycznie uzupełniał bazę o nowe firmy w regionie.'
+        }
+    };
+
+    function openModal(id) {
+        const modal = document.getElementById('project-modal');
+        const data = projectsData[id];
+        
+        if (!data) return;
+
+        // Populate content
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-desc').innerText = data.desc;
+        document.getElementById('modal-problem').innerText = data.problem;
+        document.getElementById('modal-solution').innerText = data.solution;
+        document.getElementById('modal-effect').innerText = data.effect;
+
+        // Populate tags
+        const tagsContainer = document.getElementById('modal-tags');
+        tagsContainer.innerHTML = '';
+        data.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'bg-slate-800/50 text-teal-400 px-3 py-1 rounded-full text-xs font-medium border border-teal-500/20';
+            span.innerText = tag;
+            tagsContainer.appendChild(span);
+        });
+
+        // Show modal & lock scroll
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('project-modal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+</script>
+ 
 
   <section id="about" class="relative z-20 w-full py-16 lg:py-24 bg-[#050810]">
     <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-[#050810] -translate-y-full pointer-events-none"></div>
