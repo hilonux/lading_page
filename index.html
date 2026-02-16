@@ -1,1235 +1,1968 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Automation Hero & Contact</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
-  
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Hero</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        body: '#050810',
+                        card: '#0a0f1c',
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                        },
+                        slate: {
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            800: '#1e293b',
+                        }
+                    },
+                    fontFamily: {
+                        'roboto-slab': ['"Roboto Slab"', 'serif'],
+                        'kode': ['"Kode Mono"', 'monospace'],
+                        'playfair': ['"Playfair Display"', 'serif'],
+                    },
+                    zIndex: {
+                        '60': '60',
+                        '70': '70',
+                        '80': '80',
+                    }
+                }
+            }
+        }
+    </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Browser Detection for Grid Adjustment -->
+    <script>
+            (function () {
+                const userAgent = navigator.userAgent;
+                const isOpera = userAgent.includes('OPR');
+                const isEdge = userAgent.includes('Edg');
+                // Check for Chrome but exclude Opera and Edge
+                const isChrome = userAgent.includes('Chrome') && !isOpera && !isEdge;
 
-  <style>
-    /* KONFIGURACJA TYPOGRAFII */
-    body {
-      font-family: 'Roboto Slab', serif;
-      background-color: #050810;
-      color: #cbd5e1; /* slate-300 */
-    }
+                if (isChrome) {
+                    document.documentElement.classList.add('is-chrome');
+                    console.log('Chrome detected: Enhanced grid active');
+                }
+            })();
+    </script>
 
-    .font-playfair {
-      font-family: 'Playfair Display', serif;
-    }
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Spline Viewer -->
+    <!-- Spline Runtime via Module (moved to body) -->
+    <!-- Calendly Widget -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
-    .font-kode {
-      font-family: 'Kode Mono', monospace;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
 
-    /* --- GRID PATTERN --- */
-    .bg-grid-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg stroke='%233d4a5f' stroke-width='0.5' fill='none' opacity='0.2'%3E%3Cpath d='M0 .5h32M.5 0v32'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: 32px 32px;
-      background-repeat: repeat;
-    }
+    <style>
+        /* Base Setup */
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: #050810;
+            color: #cbd5e1;
+        }
 
-    .mask-gradient-clean {
-      mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-      -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-    }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
 
-    /* --- PŁYNNE PRZEJŚCIA (FADES) --- */
-    .section-fade-top-transparent {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
-      background: linear-gradient(
-        to bottom,
-        rgba(5, 8, 16, 1) 0%,
-        rgba(5, 8, 16, 0.738) 19%,
-        rgba(5, 8, 16, 0.541) 34%,
-        rgba(5, 8, 16, 0.382) 47%,
-        rgba(5, 8, 16, 0.278) 56.5%,
-        rgba(5, 8, 16, 0.194) 65%,
-        rgba(5, 8, 16, 0.126) 73%,
-        rgba(5, 8, 16, 0.075) 80.2%,
-        rgba(5, 8, 16, 0.042) 86.1%,
-        rgba(5, 8, 16, 0.021) 91%,
-        rgba(5, 8, 16, 0.008) 95.2%,
-        rgba(5, 8, 16, 0.002) 98.2%,
-        transparent 100%
-      );
-      pointer-events: none;
-      z-index: 2;
-    }
+        .font-kode {
+            font-family: 'Kode Mono', monospace;
+        }
 
-    .section-fade-bottom-transparent {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
-      background: linear-gradient(
-        to top,
-        rgba(5, 8, 16, 1) 0%,
-        rgba(5, 8, 16, 0.738) 19%,
-        rgba(5, 8, 16, 0.541) 34%,
-        rgba(5, 8, 16, 0.382) 47%,
-        rgba(5, 8, 16, 0.278) 56.5%,
-        rgba(5, 8, 16, 0.194) 65%,
-        rgba(5, 8, 16, 0.126) 73%,
-        rgba(5, 8, 16, 0.075) 80.2%,
-        rgba(5, 8, 16, 0.042) 86.1%,
-        rgba(5, 8, 16, 0.021) 91%,
-        rgba(5, 8, 16, 0.008) 95.2%,
-        rgba(5, 8, 16, 0.002) 98.2%,
-        transparent 100%
-      );
-      pointer-events: none;
-      z-index: 2;
-    }
+        /* --- GRID PATTERN --- */
+        .bg-grid-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg stroke='%233d4a5f' stroke-width='0.5' fill='none' opacity='0.2'%3E%3Cpath d='M0 .5h32M.5 0v32'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 32px 32px;
+            background-repeat: repeat;
+        }
 
-    /* --- PRZYCISKI SHINY CTA --- */
-    @property --gradient-angle {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
+        /* Chrome-specific grid adjustment - stronger visibility */
+        .is-chrome .bg-grid-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg stroke='%233d4a5f' stroke-width='1.0' fill='none' opacity='0.3'%3E%3Cpath d='M0 .5h32M.5 0v32'/%3E%3C/g%3E%3C/svg%3E");
+        }
 
-    @property --gradient-angle-offset {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
+        .mask-gradient-clean {
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);
+        }
 
-    @property --gradient-percent {
-      syntax: "<percentage>";
-      initial-value: 20%;
-      inherits: false;
-    }
+        .mask-gradient-soft {
+            mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+        }
 
-    @property --gradient-shine {
-      syntax: "<color>";
-      initial-value: #14b8a6;
-      inherits: false;
-    }
+        /* --- PRZYCISKI SHINY CTA --- */
+        @property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
 
-    .shiny-cta {
-      --gradient-angle: 0deg;
-      --gradient-angle-offset: 0deg;
-      --gradient-percent: 20%;
-      --gradient-shine: #2dd4bf;
-      --button-base: #1e40af;
+        @property --gradient-angle-offset {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
 
-      position: relative;
-      overflow: hidden;
-      border-radius: 9999px;
-      padding: 14px 32px;
-      font-size: 0.875rem;
-      line-height: 1.5;
-      font-weight: 600;
-      color: #ffffff;
-      font-family: 'Roboto Slab', serif; 
+        @property --gradient-percent {
+            syntax: "<percentage>";
+            initial-value: 20%;
+            inherits: false;
+        }
 
-      background: linear-gradient(#050810, #050810) padding-box,
-        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
-          transparent 0%,
-          var(--button-base) 5%,
-          var(--gradient-shine) 15%,
-          var(--button-base) 30%,
-          transparent 40%,
-          transparent 100%) border-box;
+        @property --gradient-shine {
+            syntax: "<color>";
+            initial-value: #14b8a6;
+            inherits: false;
+        }
 
-      border: 2px solid transparent;
-      box-shadow: inset 0 0 0 1px #1e293b;
-      outline: none;
-      transition: transform 0.2s, box-shadow 0.3s;
-      cursor: pointer;
-      isolation: isolate;
-      animation: border-spin 3s linear infinite;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .shiny-cta {
+            --gradient-angle: 0deg;
+            --gradient-angle-offset: 0deg;
+            --gradient-percent: 20%;
+            --gradient-shine: #2dd4bf;
+            --button-base: #1e40af;
 
-    @keyframes border-spin {
-      to {
-        --gradient-angle: 360deg;
-      }
-    }
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px;
+            padding: 14px 32px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #ffffff;
+            font-family: 'Roboto Slab', serif;
 
-    .shiny-cta:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
-    }
+            background: linear-gradient(#050810, #050810) padding-box,
+                conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+                    transparent 0%,
+                    var(--button-base) 5%,
+                    var(--gradient-shine) 15%,
+                    var(--button-base) 30%,
+                    transparent 40%,
+                    transparent 100%) border-box;
 
-    .shiny-cta:active {
-      transform: scale(0.98);
-    }
+            border: 2px solid transparent;
+            box-shadow: inset 0 0 0 1px #1e293b;
+            outline: none;
+            transition: transform 0.2s, box-shadow 0.3s;
+            cursor: pointer;
+            isolation: isolate;
+            animation: border-spin 3s linear infinite;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .shiny-cta::before {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 50%, white 0.5px, transparent 0);
-      background-size: 4px 4px;
-      mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg), black, transparent 10% 90%, black);
-      opacity: 0.3;
-    }
+        @keyframes border-spin {
+            to {
+                --gradient-angle: 360deg;
+            }
+        }
 
-    .shiny-cta::after {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      width: 100%;
-      aspect-ratio: 1;
-      background: linear-gradient(-50deg, transparent, #2dd4bf, transparent);
-      mask-image: radial-gradient(circle at bottom, transparent 40%, black);
-      opacity: 0.4;
-      animation: shimmer 4s linear infinite;
-    }
+        .shiny-cta:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+        }
 
-    .shiny-cta span {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .shiny-cta:active {
+            transform: scale(0.98);
+        }
 
-    @keyframes shimmer {
-      0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-      100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-      }
-    }
+        .shiny-cta::before {
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, white 0.5px, transparent 0);
+            background-size: 4px 4px;
+            mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg), black, transparent 10% 90%, black);
+            opacity: 0.3;
+        }
 
-    /* Responsive Breakpoints */
-    @media (min-width: 1200px) {
-      main h1 { font-size: clamp(3rem, 5vw, 4.5rem); }
-      #projects h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); }
-    }
-    @media (min-width: 1440px) {
-      main h1 { font-size: clamp(4rem, 6vw, 5.5rem); }
-      #projects, #about, #faq, #contact, #process { padding-left: 2rem; padding-right: 2rem; }
-    }
-    @media (min-width: 1920px) {
-      .max-w-7xl { max-width: 90rem; }
-      main h1 { font-size: clamp(4.5rem, 7vw, 6rem); }
-      #projects h2 { font-size: clamp(3rem, 5vw, 4rem); }
-    }
-    @media (max-width: 640px) {
-      nav { flex-wrap: wrap; justify-content: center; }
-      nav a { font-size: 0.75rem; padding: 0.5rem; }
-      main h1 { font-size: 2.5rem; }
-    }
-    
-    .scroll-mt-32 {
-        scroll-margin-top: 8rem;
-    }
-  </style>
+        .shiny-cta::after {
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(-50deg, transparent, #2dd4bf, transparent);
+            mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+            opacity: 0.4;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .shiny-cta span {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+
+
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Text Glow Class */
+        .text-shimmer-glow {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+        }
+
+        /* Hide project card icons on very small mobile devices (below 380px) */
+        @media (max-width: 379px) {
+            .project-card-icon {
+                display: none !important;
+            }
+        }
+
+        /* Disable all interaction on Spline (fixes scroll lock + blocks watermark click) */
+        #canvas3d {
+            pointer-events: none !important;
+        }
+
+        /* Hide the "Built with Spline" logo inside the shadow DOM */
+        spline-viewer::part(logo) {
+            display: none !important;
+        }
+
+        /* Responsive Spline container for medium-large screens */
+        @media (max-width: 1399px) and (min-width: 1200px) {
+            .spline-container {
+                height: 600px !important;
+                margin-right: -40px !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="min-h-screen overflow-x-hidden selection:bg-teal-500 selection:text-white relative">
 
-  <div class="fixed inset-0 z-0 pointer-events-none">
-    <div class="absolute inset-0 bg-grid-pattern mask-gradient-clean"></div>
-  </div>
-
-  <nav class="relative z-50 flex gap-8 text-sm font-medium tracking-tight w-full max-w-7xl mx-auto pt-8 px-6 pb-8 items-center justify-end">
-    <a href="#process" class="hover:text-white transition-colors duration-200">Współpraca</a>
-    <a href="#projects" class="hover:text-white transition-colors duration-200">Projekty</a>
-    <a href="#about" class="hover:text-white transition-colors duration-200">O mnie</a>
-    <a href="#faq" class="hover:text-white transition-colors duration-200">FAQ</a>
-    
-    <a href="#" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/adam-blasz1/30min'});return false;" class="ml-4 shiny-cta text-xs uppercase tracking-wider">
-      <span>Umów konsultacje</span>
-    </a>
-  </nav>
-
-  <main class="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 min-h-[75vh] items-center gap-12 lg:gap-0 pb-20">
-
-    <div class="flex flex-col lg:pt-0 pt-10 space-y-8 items-start justify-center order-2 lg:order-1 relative">
-      
-      <div class="absolute top-0 left-0 -translate-x-1/2 h-full w-[300px] bg-gradient-to-r from-teal-900/40 via-blue-900/20 to-transparent blur-[120px] -z-10 pointer-events-none"></div>
-
-      <h1 class="leading-[1.1] lg:text-7xl text-5xl font-semibold text-white tracking-tight">
-        Automatyzuję to, <br>
-        czego Twoja <br>
-        firma nie powinna <br>
-        robić
-        <span class="block mt-2 text-teal-400 font-kode font-bold tracking-normal">ręcznie.</span>
-      </h1>
-
-      <p class="lg:text-lg leading-relaxed font-light text-slate-400 max-w-xl">
-       Pomogę Twojej firmie pracować efektywniej. Buduję dedykowane systemy  AI, które wykonują powtarzalne czynności za Ciebie 
-        a Ty skupiasz się na biznesie. Wdrażam technologię tam,
-         gdzie realnie oszczędza ona Twój czas i pieniądze. 
-      </p>
-
-      <div class="pt-2 w-full flex flex-col sm:flex-row items-center sm:justify-start gap-6">
-        <a href="#" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/adam-blasz1/30min'});return false;" class="shiny-cta">
-          <span>Porozmawiajmy</span>
-        </a>
-        <a href="#projects" class="text-slate-300 hover:text-white text-sm px-6 py-3.5 rounded-full font-medium transition-colors duration-200 flex items-center gap-2">
-          Zobacz realizacje <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
-      </div>
+    <!-- Background Grid -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-grid-pattern mask-gradient-clean"></div>
     </div>
 
-  <div class="lg:h-[600px] flex order-1 lg:order-2 lg:min-h-[600px] overflow-visible w-full h-[500px] relative items-center justify-center lg:justify-end">
-  
-  <div class="absolute top-1/2 right-0 lg:-right-20 -translate-y-1/2 w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] bg-gradient-to-tr from-teal-500/30 via-blue-600/20 to-transparent blur-[100px] rounded-full -z-10 pointer-events-none"></div>
+    <!-- Navigation -->
+    <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 w-full px-6 py-6 transition-all duration-300">
 
-  <spline-viewer 
-    class="pointer-events-none lg:translate-x-16" 
-    loading-anim-type="spinner-small-dark"
-    url="https://prod.spline.design/qc2FmTCt0ar6G0qw/scene.splinecode">
-  </spline-viewer>
-</div>
-  </main>
-
-<section class="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 bg-transparent border-t border-slate-800/50">
-    
-    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-      <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight leading-[1.1]">
-        Czym jest automatyzacja<br>
-        i kiedy warto ją wdrożyć?
-      </h2>
-      <p class="text-lg text-slate-400 leading-relaxed font-light">
-        To rozwiązania dla firm, które chcą wyprzedzić konkurencję oraz w pełni wykorzystać potencjał nowych technologii. Oczywiście również oszczędzić mnóstwo czasu.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-      <div class="group bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
-        <div class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        
-        <h3 class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors">Czym jest automatyzacja?</h3>
-        
-        <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
-          <p>
-            To integracja narzędzi (CRM, e-maile, arkusze kalkulacyjne, formularze), które wykonują za Ciebie powtarzalne czynności.
-          </p>
-          
-          <p class="pl-4 border-l-2 border-teal-500/20 italic text-slate-400">
-            Ktoś wypełnia formularz <span class="text-teal-400">→</span> dane trafiają do bazy danych <span class="text-teal-400">→</span> wysyłany jest e-mail <span class="text-teal-400">→</span> ustawiane jest przypomnienie „zadzwoń za 2 dni" <span class="text-teal-400">→</span> wszystko automatycznie.
-          </p>
-          
-          <p>
-            Możesz także tworzyć agentów AI, aby pomóc w obsłudze klienta, tworzyć treści na social media , a nawet wspierać proces sprzedaży dzięki automatyzacji.
-          </p>
-          
-          <p class="font-medium text-slate-300">
-            Nie musisz zatrudniać całego zespołu IT na pełen etat.
-          </p>
-        </div>
-      </div>
-
-      <div class="group bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
-        <div class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        
-        <h3 class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors">Dla kogo to jest?</h3>
-        
-        <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
-          <p>
-            pracuję z małymi i średnimi przedsiębiorstwami wszędzie tam, gdzie jest niewielki zespół
-          </p>
-          
-          <div>
-            <p class="mb-2">Najczęściej są to firmy, gdzie:</p>
-            <ul class="space-y-2">
-              <li class="flex items-start gap-2">
-                <span class="text-teal-400 mt-1">→</span>
-                <span>Leady wpadają z wielu miejsc (mail, formularz)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-teal-400 mt-1">→</span>
-                <span>Brakuje czasu na ręczne odpisywanie na zapytania klientów</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-teal-400 mt-1">→</span>
-                <span>Firma nie ma budżetu na dział IT ani wielomiesięczne wdrożenia</span>
-              </li>
-            </ul>
-          </div>
-          
-          <p>
-            <p>Nie ma budżetu na dział IT ani na długoterminowe wdrożenie.</p>       
-                Jeśli masz  1-20 osób i tracisz czas na wprowadzanie danych, to rozwiązanie jest Dla ciebie
-          </p>
-          
-          <p class="font-medium text-slate-300">
-            Automatyzacja pozwala wrócić do tego, co naprawdę ważne, czyli budowania relacji z klientem i finalizowania sprzedaży
-          </p>
-        </div>
-      </div>
-
-      <div class="group bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
-        <div class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-        </div>
-        
-        <h3 class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors">Jakie problemy rozwiązuję?</h3>
-        
-        <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
-          <p>Z czym najczęściej przychodzą klienci?</p>
-          
-          <ul class="space-y-3">
-            <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
-              <span class="text-red-400/80 mt-1 shrink-0">✕</span>
-              <span>"Tracę 2h dziennie na ręczne przepisywanie leadów do CRM"</span>
-            </li>
-            <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
-              <span class="text-red-400/80 mt-1 shrink-0">✕</span>
-              <span>"Mam chaos w plikach dane są 3 miejscach i ciągle przęłaczam miedzy dokumentami"</span>
-            </li>
-            <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
-              <span class="text-red-400/80 mt-1 shrink-0">✕</span>
-              <span>"Gubią mi się leady, gdzie był ten numer telefonu? "</span>
-            </li>
-            <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
-              <span class="text-red-400/80 mt-1 shrink-0">✕</span>
-              <span>"Nie chce mi się ręcznie wpisywać danych do CRM po spotkaniu biznesowym "</span>
-            </li>
-          </ul>
-          
-          <p class="font-medium text-slate-300 pt-2">
-            Automatyzacja rozwiązuje te problemy  Jesteś w stanie oszczędzić nawet 10-15 godzin tygodniowo. Następnie wracasz do tego, co dla Ciebie tak naprawdę się liczy...
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-</section>
-
-
-  <section id="process" class="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 bg-transparent border-t border-slate-800/50">
-    <div class="section-fade-top-transparent"></div>
-
-    <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 relative">
-        
-        <div class="lg:w-[40%] flex flex-col gap-10 lg:sticky lg:top-32 lg:h-fit self-start">
-            <div class="space-y-4">
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.1]">
-                    Jak wygląda<br>
-                    <span class="text-teal-400">współpraca?</span>
-                </h2>
-                <p class="text-lg text-slate-400 leading-relaxed max-w-sm">
-                    P Od pierwszej rozmowy do działającej automatyzacji w 1-4 tygodnie.
-                </p>
+        <div class="w-full max-w-7xl mx-auto flex items-center relative">
+            <!-- Desktop Menu Links (Centered) -->
+            <div
+                class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2">
+                <a href="#process" class="hover:text-white transition-colors">Współpraca</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projekty</a>
+                <a href="#about" class="hover:text-white transition-colors">O mnie</a>
+                <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
             </div>
 
-            <nav class="hidden lg:flex flex-col gap-6 mt-4">
-                <a href="#step1" class="menu-link text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent pl-0 hover:pl-4 hover:border-teal-500">
-                    01.  Rozmowa
-                </a>
-                <a href="#step2" class="menu-link text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent pl-0 hover:pl-4 hover:border-teal-500">
-                    02. Propozycja i wycena
-                </a>
-                <a href="#step3" class="menu-link text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent pl-0 hover:pl-4 hover:border-teal-500">
-                    03. Wdrożenie
-                </a>
-                <a href="#step4" class="menu-link text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent pl-0 hover:pl-4 hover:border-teal-500">
-                    04. Przekazanie i wsparcie
-                </a>
-            </nav>
-        </div>
-
-        <div class="lg:w-[60%] flex flex-col gap-24 pb-20">
-            
-            <div id="step1" class="feature-block flex flex-col gap-6 scroll-mt-32 group">
-                <div class="bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-300 relative shadow-sm hover:shadow-2xl hover:shadow-teal-500/10">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform duration-300 group-hover:border-teal-400 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
-                        </div>
-                        <span class="text-5xl font-kode font-bold text-slate-800 group-hover:text-teal-500/10 transition-colors select-none">01</span>
-                    </div>
-                    
-                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-teal-400 transition-colors"> Rozmowa</h3>
-                    
-                    <p class="text-base text-slate-400 leading-relaxed mb-6">
-                        Rozmawiamy o tym, jak obecnie pracujesz  gdzie tracisz czas, gdzie gubią się leady, co działa ręcznie, a mogłoby działać automatycznie. <br><br>
-                         Słucham, zadaję pytania i staram się zrozumieć, gdzie automatyzacja naprawdę Ci pomoże. Na koniec rozmowy powiem wprost: czy mogę pomóc i jak to może wyglądać.
-                    </p>
-
-                    <div class="pt-4 border-t border-slate-800/50">
-                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            20-30 minut
-                        </span>
-                    </div>
-                </div>
-                <div class="lg:hidden flex justify-center text-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
-                </div>
-            </div>
-
-            <div id="step2" class="feature-block flex flex-col gap-6 scroll-mt-32 group">
-                <div class="bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-300 relative shadow-sm hover:shadow-2xl hover:shadow-teal-500/10">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform duration-300 group-hover:border-teal-400 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
-                        </div>
-                        <span class="text-5xl font-kode font-bold text-slate-800 group-hover:text-teal-500/10 transition-colors select-none">02</span>
-                    </div>
-                    
-                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-teal-400 transition-colors">Propozycja i wycena</h3>
-                    
-                    <div class="text-base text-slate-400 leading-relaxed mb-6 space-y-4">
-                        <p>Po rozmowie przygotowuję dla Ciebie dokument z:</p>
-                        <ul class="list-disc pl-5 space-y-1 text-slate-500 marker:text-teal-500/50">
-                            <li>Opisem tego, co zautomatyzujemy (procesy, narzędzia)</li>
-                            <li>Harmonogramem prac (ile to zajmie)</li>
-                            <li>Wyceną </li>
-                        </ul>
-                        <p>Dostajesz jasny plan  wiesz dokładnie, co się wydarzy, w jakiej kolejności i ile to kosztuje. Jeśli coś jest niejasne, doprecyzowujemy. Jeśli wszystko jest OK  startujemy.</p>
-                    </div>
-
-                    <div class="pt-4 border-t border-slate-800/50">
-                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                            2-3 dni na przygotowanie
-                        </span>
-                    </div>
-                </div>
-                <div class="lg:hidden flex justify-center text-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
-                </div>
-            </div>
-
-            <div id="step3" class="feature-block flex flex-col gap-6 scroll-mt-32 group">
-                <div class="bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-300 relative shadow-sm hover:shadow-2xl hover:shadow-teal-500/10">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform duration-300 group-hover:border-teal-400 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hammer"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.25 4.19"/></svg>
-                        </div>
-                        <span class="text-5xl font-kode font-bold text-slate-800 group-hover:text-teal-500/10 transition-colors select-none">03</span>
-                    </div>
-                    
-                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-teal-400 transition-colors">Wdrożenie</h3>
-                    
-                    <p class="text-base text-slate-400 leading-relaxed mb-6">
-                        Buduję automatyzację i integruję Twoje narzędzia (CRM, arkusze, maile, formularze). Testuję wszystko krok po kroku, żeby upewnić się, że działa stabilnie.<br><br>
-                        Co tydzień (lub częściej) dostajesz krótką aktualizację: co zrobione, co dalej. Jeśli po drodze okaże się, że coś trzeba zmienić  rozmawiamy  o tym  i dopasowujemy rozwiązanie.
-                    </p>
-
-                    <div class="pt-4 border-t border-slate-800/50">
-                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hourglass"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
-                            1-4 tygodnie
-                        </span>
-                    </div>
-                </div>
-                <div class="lg:hidden flex justify-center text-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
-                </div>
-            </div>
-
-            <div id="step4" class="feature-block flex flex-col gap-6 scroll-mt-32 group">
-                <div class="bg-[#0a0f1c] border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-300 relative shadow-sm hover:shadow-2xl hover:shadow-teal-500/10">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform duration-300 group-hover:border-teal-400 shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
-                        </div>
-                        <span class="text-5xl font-kode font-bold text-slate-800 group-hover:text-teal-500/10 transition-colors select-none">04</span>
-                    </div>
-                    
-                    <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-teal-400 transition-colors">Przekazanie i wsparcie</h3>
-                    
-                    <p class="text-base text-slate-400 leading-relaxed mb-6">
-                        Pokazuję Ci, jak działa nowa automatyzacja. Dostajesz prostą dokumentację krok po kroku co robi system i co zrobić, gdyby coś poszło nie tak.<br><br>
-                        <strong>Przez pierwsze 14 dni jesteś chroniony.</strong>  Jeśli coś się zepsuje, naprawiam bez kosztów. Po tym czasie możesz liczyć na wsparcie techniczne lub zostawić system, który po prostu działa.
-                    </p>
-
-                    <div class="pt-4 border-t border-slate-800/50">
-                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-up"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
-                            14 dni gwarancji
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="section-fade-bottom-transparent"></div>
-  </section>
-<div id="projects" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-0 pb-24 bg-transparent">
-    
-    <h2 class="text-4xl md:text-5xl text-center mb-16 tracking-tight text-white font-semibold relative z-20 drop-shadow-2xl">
-      Ostatnie Projekty Techniczne
-    </h2>
-
-    <div class="flex flex-col gap-6 max-w-4xl mx-auto relative">
-
-      <div onclick="openModal('email-assistant')" class="group sticky top-24 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
-        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">n8n, RAG & Gmail API</span>
-        </div>
-        <div class="flex justify-between items-end">
-          <div class="max-w-xl">
-            <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              Inteligentny Asystent Email
-            </h3>
-            <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              System "wsparcia w tle", który analizuje przychodzące maile i generuje gotowe drafty odpowiedzi w oparciu o bazę wiedzy firmy.
-            </p>
-            <div class="flex gap-12 text-slate-300">
-              <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Oszczędność</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Czasu 90%</div>
-              </div>
-              <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Pełna</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Kontrola</div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-6 h-6"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-          </div>
-        </div>
-      </div>
-
-      <div onclick="openModal('facebook-scraper')" class="group sticky top-28 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
-        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Web Scraping & AI</span>
-        </div>
-        <div class="flex justify-between items-end">
-          <div class="max-w-xl">
-            <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              Automat Pozyskiwania Ofert
-            </h3>
-            <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              Agent , który codziennie sprawdza grupy na Facebooku, filtruje oferty sprzedaży i wyciąga dane kontaktowe do bazy.
-            </p>
-            <div class="flex gap-12 text-slate-300">
-              <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Automatyczna</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Selekcja</div>
-              </div>
-              <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Gotowa</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Baza Leadów</div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-6 h-6"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
-          </div>
-        </div>
-      </div>
-      
-      <div onclick="openModal('telegram-inventory')" class="group sticky top-32 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
-        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Telegram Bot & AI</span>
-        </div>
-        <div class="flex justify-between items-end">
-          <div class="max-w-xl">
-            <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              Głosowy Asystent Inwentaryzacji
-            </h3>
-            <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              Bot na Telegramie, który zamienia wiadomości głosowe w strukturalne dane w Google Sheets  bez przepisywania.
-            </p>
-            <div class="flex gap-12 text-slate-300">
-              <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Zero</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Przepisywania</div>
-              </div>
-              <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Głosowe</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Dyktowanie</div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic w-6 h-6"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></svg>
-          </div>
-        </div>
-      </div>
-
-      <div onclick="openModal('maps-leads')" class="group sticky top-36 bg-[#0a0f1c] hover:bg-gradient-to-br hover:from-[#0a0f1c] hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
-        <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
-          <span class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
-          <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Apify & Google Maps API</span>
-        </div>
-        <div class="flex justify-between items-end">
-          <div class="max-w-xl">
-            <h3 class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors">
-              Automatyczne Leady z Google Maps
-            </h3>
-            <p class="text-slate-400 mb-8 font-medium leading-relaxed">
-              System, który masowo skanuje Google Maps i strony firm, wyciągając telefony, maile i adresy do Google Sheets.
-            </p>
-            <div class="flex gap-12 text-slate-300">
-              <div class="group-hover:translate-x-2 transition-transform duration-300">
-                <div class="text-lg font-semibold text-teal-400">Masowa</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Skala</div>
-              </div>
-              <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
-                <div class="text-lg font-semibold text-teal-400">Email +</div>
-                <div class="text-sm text-slate-500 mt-1 font-medium">Telefon</div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-6 h-6"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          </div>
-        </div>
-      </div>
-
-    </div>
-</div>
-
-<div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div onclick="closeModal()" class="absolute inset-0 bg-[#050810]/90 backdrop-blur-md transition-opacity duration-300"></div>
-    
-    <div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0a0f1c] border border-slate-800 rounded-3xl shadow-2xl shadow-black">
-        
-        <div class="sticky top-0 z-10 flex justify-between items-center p-6 border-b border-slate-800 bg-[#0a0f1c]/95 backdrop-blur">
-            <h3 id="modal-title" class="text-2xl md:text-3xl font-semibold text-white"></h3>
-            <button onclick="closeModal()" class="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </button>
-        </div>
-
-        <div class="p-8 md:p-12 space-y-10">
-            
-            <div>
-                <div class="flex flex-wrap gap-3 mb-6" id="modal-tags"></div>
-                <p id="modal-desc" class="text-lg text-slate-300 leading-relaxed font-light"></p>
-            </div>
-
-            <hr class="border-slate-800/50">
-
-            <div class="flex flex-col gap-8">
-                <div class="space-y-3 w-full">
-                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Problem</span>
-                    <p id="modal-problem" class="text-base text-slate-400 leading-relaxed"></p>
-                </div>
-                <div class="space-y-3 w-full">
-                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Rozwiązanie</span>
-                    <p id="modal-solution" class="text-base text-slate-400 leading-relaxed"></p>
-                </div>
-                <div class="space-y-3 w-full">
-                    <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Efekt</span>
-                    <p id="modal-effect" class="text-base text-slate-400 leading-relaxed"></p>
-                </div>
-            </div>
-            <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900/50 h-64 flex items-center justify-center mt-4">
-                <span class="text-slate-600 font-mono text-sm">[Miejsce na screen automatyzacji]</span>
-            </div>
-            
-            <div class="text-center pt-4">
-                 <a href="#contact" onclick="closeModal()" class="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors border-b border-teal-500/30 hover:border-teal-400 pb-1">
-                    Zapytaj o podobne wdrożenie <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                 </a>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<script>
-    const projectsData = {
-        'email-assistant': {
-            title: 'Inteligentny Asystent Email',
-            desc: 'System „wsparcia w tle”, które przetwarza przychodzące e-maile i tworzy gotowe szkice odpowiedzi na podstawie bazy wiedzy firmy. Nie wysyła wiadomości automatycznie  masz pełną kontrolę nad każdą odpowiedzią.',
-            tags: ['n8n', 'RAG', 'Gmail API', 'Vector Store'],
-            problem: 'Ręczne odpowiadanie na powtarzające się zapytania klientów  znacznie redukuje czas pracy . Gotowe szablony „kopiuj-wklej” brzmią sztucznie i nie odpowiadają na specyficzne potrzeby zawarte w wiadomości.',
-            solution: 'System ocenia treść każdego przychodzącego e-maila, przeszukuje bazę wiedzy firmy (cenniki, procedury, FAQ), która została załadowana, i generuje merytoryczną odpowiedź. Odpowiedź odnosi się do konkretnych pytań i używa naturalnego, ludzkiego tonu.',
-            effect: 'Logujesz się do swojego e-maila rano i znajdujesz gotowe odpowiedzi czekające w folderze „wersje Robocze”. Przeglądasz je, wprowadzasz drobne poprawki, jeśli to konieczne, i klikasz „Wyślij”. Oszczędzasz 80-90% swojego czasu, zachowując pełną kontrolę nad komunikacją.'
-        },
-        'facebook-scraper': {
-            title: 'Automat Pozyskiwania Ofert',
-            desc: 'Bot, który codziennie o ustalonej porze przeszukuje określone grupy na Facebooku, automatycznie odrzuca ogłoszenia o wynajmie i zapisuje oferty sprzedaży wraz z informacjami kontaktowymi do bazy danych.',
-            tags: ['Facebook API', 'Web Scraping', 'Airtable', 'n8n'],
-            problem: 'Agenci nieruchomości spędzają godziny na ręcznym przeszukiwaniu setek grup na Facebooku, próbując wyłowić oferty sprzedaży mieszkań spośród tysięcy ogłoszeń o wynajmie i spamu. W tym natłoku łatwo przeoczyć cenną okazję.',
-            solution: 'Bot przeszukuje określone grupy na FB każdego ranka. Automatycznie odrzuca wszystko, co związane z wynajmem, i skupia się tylko na sprzedaży. "Czyta" posty i wyciąga: numer telefonu, link do ogłoszenia, treść opisu. Dane trafiają do tabeli (Airtable/Excel).',
-            effect: 'Agent zaczyna dzień z gotową listą nowych potencjalnych klientów do kontaktu. Zamiast szukać igły w stogu siana, otrzymuje tylko te ogłoszenia, które mogą realnie przynieść zysk. Oszczędność czasu i większa skuteczność.'
-        },
-        'telegram-inventory': {
-            title: 'Głosowy Asystent Inwentaryzacji',
-            desc: 'Bot na Telegramie, który przetwarza wiadomości głosowe i przekształca je w uporządkowane dane w arkuszu kalkulacyjnym. Nie musisz nic pisać – po prostu mówisz do telefonu to, co zanotowałeś w magazynie.',
-            tags: ['Telegram Bot API', 'Speech-to-Text', 'Google Sheets',],
-            problem: 'Inwentaryzacja w restauracji, magazynie czy sklepie to dużo podwójnej pracy: zapisujesz braki na papierze podczas obchodu, a potem idziesz do komputera i spędzasz godzinę na przepisywaniu wszystkiego do Excela. To strata czasu i źródło błędów.',
-            solution: 'Przechadzasz się po magazynie i mówisz do telefonu: „Zostało 5 kartonów mleka, 3 kilo kurczaka, musimy zamówić więcej pomidorów.” System robi resztę sam: bierze nagranie i formatuje je na tekst, rozpoznaje produkty, ilości i umieszcza dane w odpowiednich kolumnach Arkuszy Google.',
-            effect: 'Inwentaryzacja kończy się w momencie wysłania ostatniej wiadomości na Telegramie. Nie ma siedzenia przy komputerze ani przepisywania, więc dane są od razu w systemie. Oszczędność czasu i eliminacja błędów.'
-        },
-        'maps-leads': {
-            title: 'Automatyczne Leady z Google Maps',
-            desc: 'System, który przeszukuje Google Maps i strony firmowe, zbierając numery telefonów, e-maile i adresy. Następnie wszystko trafia automatycznie do Arkuszy Google  gotowej bazy danych do cold call lub cold e-mail',
-            tags: ['Apify', 'Google Maps', 'Web Scraping', 'Google Sheets'],
-            problem: 'Żmudne zadanie ręcznego wyszukiwania klientów B2B jest takie samo jak wszędzie indziej na świecie: Wchodzisz na Google Maps, wpisujesz „restauracje Gdańsk”, klikasz na każdą pozycję i kopiujesz numer telefonu do Excela. Zajmuje to dużo czasu , a często brakuje e-maila w ogłoszeniach.',
-            solution: 'Definiujesz cel: „Znajdź wszystkie restauracje w Gdańsku.” Jak działa system: skanuje mapy i wyciąga podstawowe dane (nazwa, numer telefonu, adres), następnie odwiedza strony internetowe każdej firmy i odczytuje e-maile, zapisując kompletne dane w uporządkowanym arkuszu (Arkusze Google).',
-            effect: 'Zamiast tracić czas na research, zespół sprzedaży będzie miał gotową listę potencjalnych klientów. Proces można ustawić tak, aby działał codziennie w tle, zmieniając wyłącznie przeszukiwany region.'
-        }
-    };
-
-    function openModal(id) {
-        const modal = document.getElementById('project-modal');
-        const data = projectsData[id];
-        
-        if (!data) return;
-
-        // Populate content
-        document.getElementById('modal-title').innerText = data.title;
-        document.getElementById('modal-desc').innerText = data.desc;
-        document.getElementById('modal-problem').innerText = data.problem;
-        document.getElementById('modal-solution').innerText = data.solution;
-        document.getElementById('modal-effect').innerText = data.effect;
-
-        // Populate tags
-        const tagsContainer = document.getElementById('modal-tags');
-        tagsContainer.innerHTML = '';
-        data.tags.forEach(tag => {
-            const span = document.createElement('span');
-            span.className = 'bg-slate-800/50 text-teal-400 px-3 py-1 rounded-full text-xs font-medium border border-teal-500/20';
-            span.innerText = tag;
-            tagsContainer.appendChild(span);
-        });
-
-        // Show modal & lock scroll
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        const modal = document.getElementById('project-modal');
-        modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-    }
-
-    // Close on Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            closeModal();
-        }
-    });
-</script>
-
-  <section id="about" class="relative z-20 w-full py-16 lg:py-24 bg-[#050810]">
-    <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-[#050810] -translate-y-full pointer-events-none"></div>
-
-    <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-      
-    <div class="lg:col-span-5 w-full relative order-1">
-  <div class="relative w-full aspect-[4/5] rounded-3xl overflow-hidden border border-slate-800 bg-[#0a0f1c] shadow-2xl mx-auto max-w-md lg:max-w-full">
-      
-      <img 
-         src="pomniejszona.webp" 
-        alt="Adam - Ekspert Automatyzacji" 
-        class="w-full h-full object-cover object-center"
-      />
-      
-      <div class="absolute inset-0 bg-gradient-to-t from-[#050810] via-transparent to-transparent opacity-40"></div>
-  </div>
-</div>
-
-      <div class="lg:col-span-7 flex flex-col space-y-6 text-left order-2">
-        
-        <div>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-playfair text-white tracking-tight leading-[1.1]">
-            Cześć,
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-blue-300 italic pr-2">jestem Adam.</span>
-          </h2>
-        </div>
-
-        <div class="space-y-6 text-base md:text-lg leading-relaxed text-slate-400 font-light">
-          <p>
-            Z osobowości daleko mi do typowego stereotypu informatyka (nie musisz się martwić) – ale pewnego dnia oczarowały mnie możliwości sztucznej inteligencji. Zrobiłem kilka kursów i… to mnie pochłonęło.
-          </p>
-          
-          <p>
-            Myślę, że potrafię zaskoczyć pomysłami na rozwiązanie problemów. Podchodzę do nich holistycznie: mapuję proces, rozkładam go na czynniki pierwsze i dopiero wtedy ruszam do pracy. Słucham uważnie, co sprawia Ci największy ból, a potem – jak to mówią w biznesie – szukam wąskich gardeł.
-          </p>
-          
-          <p>
-            Lubię, kiedy rozwiązania, które wdrażam, naprawdę rozwiązują problemy, a nie tylko automatyzują dla samej automatyzacji. Chcę wnosić realną wartość do Twojego biznesu.
-          </p>
-
-          <p>
-            Kiedy współpracujemy, rozmawiasz ze mną – z osobą, która kocha nowe technologie i wie, jak ich użyć, żeby Twoja firma mogła rosnąć i generować jeszcze większe zyski.
-          </p>
-
-          <p class="pt-2 border-t border-slate-800/50 mt-4">
-            <span class="text-slate-300 font-medium">Prywatnie:</span> fan polskiej sceny stand-upowej, aspirujący kowboy oraz entuzjasta treningu siłowego. Zdecydowanie osoba, która uwielbia próbować nowych aktywności i nie boi się wyzwań.
-          </p>
-        </div>
-
-      </div>
-    </div>
-    
-    <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-transparent to-[#050810] translate-y-full pointer-events-none"></div>
-  </section>
-
- <section id="faq" class="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 border-t border-slate-800/50 bg-transparent">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none overflow-hidden">
-        <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px]"></div>
-    </div>
-    
-    <div class="flex items-center justify-center mb-6 relative z-10">
-      <span class="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide border rounded-full px-3 py-1 text-slate-300/80 bg-white/5 border-white/10">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-300"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
-        Warto wiedzieć
-      </span>
-    </div>
-
-    <div class="max-w-3xl text-center mx-auto mb-16 relative z-10">
-      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight text-white font-roboto-slab">
-        Wszystko, co
-        <span class="italic text-teal-400 pr-2">powinieneś wiedzieć</span>
-      </h2>
-      <p class="mt-4 text-base md:text-lg text-slate-400 font-light font-roboto-slab">
-        zanim zaczniemy współpracę
-      </p>
-    </div>
-
-    <div class="grid gap-10 lg:grid-cols-12 items-start relative z-10">
-      
-      <div class="lg:col-span-5 order-2 lg:order-1">
-        <div class="relative overflow-hidden rounded-[2rem] border border-slate-700/50 bg-[#0a0f1c] shadow-2xl shadow-black/50 group">
-          
-          <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-teal-500/20 blur-[80px] rounded-full pointer-events-none group-hover:bg-teal-500/30 transition-all duration-500"></div>
-
-          <div class="relative h-64 w-full bg-gradient-to-b from-slate-800 to-[#0a0f1c] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop" 
-                 alt="Sam Kot - Ekspert Automatyzacji" 
-                 class="w-full h-full object-cover object-top opacity-90 group-hover:scale-105 transition-transform duration-700">
-            
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-[#0a0f1c]/60 to-transparent"></div>
-          </div>
-
-          <div class="relative p-8 text-center -mt-12">
-            <h3 class="text-xl font-semibold text-white mb-3 font-roboto-slab"> Wolisz porozmawiać ?     </h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 font-medium font-roboto-slab">
-              zobacz dostępne terminy
-            </p>
-
-            <a href="#contact" class="shiny-cta w-full flex justify-center items-center group/btn">
-              <span>Umów konsultacje</span>
-           
+            <!-- Desktop CTA Button (Right Aligned) -->
+            <a href="#"
+                onclick="Calendly.initPopupWidget({url: 'https://calendly.com/adam-blasz1/30min'});return false;"
+                class="shiny-cta ml-auto hidden md:inline-flex">
+                <span>Umów konsultacje</span>
             </a>
 
-           
-          </div>
+            <!-- Mobile Menu Button (Hamburger) - Right Aligned -->
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2 relative ml-auto z-70" aria-label="Menu">
+                <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+                <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
         </div>
-      </div>
+    </nav>
 
-      <div class="lg:col-span-7 space-y-4 order-1 lg:order-2">
-        
-        <div class="faq-item rounded-2xl transition-all duration-300 group overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md hover:bg-slate-900/60 hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5">
-          
-          <button type="button" class="w-full flex gap-5 focus:outline-none text-left p-6 items-center justify-between" onclick="this.parentElement.querySelector('.faq-content').style.maxHeight = this.parentElement.querySelector('.faq-content').style.maxHeight ? null : this.parentElement.querySelector('.faq-content').scrollHeight + 'px'; this.querySelector('svg').classList.toggle('rotate-180');">
-            <span class="text-base md:text-lg text-slate-200 font-medium pr-4 font-roboto-slab">Skąd mam wiedzieć, czy automatyzacja w ogóle ma sens w mojej firmie?</span>
-            <span class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-          </button>
-          
-          <div class="faq-content transition-all duration-300 ease-in-out max-h-0">
-            <div class="px-6 pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
-              <p class="mb-4">Jeśli tracisz więcej niż godzinę dziennie na:</p>
-              <ul class="space-y-2 mb-6 list-disc pl-5 marker:text-teal-400">
-                <li>Przepisywanie danych między systemami (np. z maili do CRM)</li>
-                <li>Ręczne tworzenie tych samych dokumentów/ofert</li>
-                <li>Odpisywanie na podobne pytania klientów</li>
-                <li>Szukanie informacji rozrzuconych po różnych miejscach</li>
-              </ul>
-              
-              
-              </div>
-          </div>
-        </div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-60 flex-col items-center justify-center gap-8 hidden"
+        style="background-color: #050810;">
+        <!-- Close Button -->
+        <button id="mobile-menu-close"
+            class="absolute top-6 right-6 text-white p-2 hover:text-teal-400 transition-colors"
+            aria-label="Zamknij menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+        <a href="#process"
+            class="text-2xl font-medium text-slate-300 hover:text-white transition-colors mobile-link">Współpraca</a>
+        <a href="#projects"
+            class="text-2xl font-medium text-slate-300 hover:text-white transition-colors mobile-link">Projekty</a>
+        <a href="#about" class="text-2xl font-medium text-slate-300 hover:text-white transition-colors mobile-link">O
+            mnie</a>
+        <a href="#faq"
+            class="text-2xl font-medium text-slate-300 hover:text-white transition-colors mobile-link">FAQ</a>
 
-        <div class="faq-item rounded-2xl transition-all duration-300 group overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md hover:bg-slate-900/60 hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5">
-          
-          <button type="button" class="w-full flex gap-5 focus:outline-none text-left p-6 items-center justify-between" onclick="this.parentElement.querySelector('.faq-content').style.maxHeight = this.parentElement.querySelector('.faq-content').style.maxHeight ? null : this.parentElement.querySelector('.faq-content').scrollHeight + 'px'; this.querySelector('svg').classList.toggle('rotate-180');">
-            <span class="text-base md:text-lg text-slate-200 font-medium pr-4 font-roboto-slab">Czym jest automatyzacja?</span>
-            <span class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-          </button>
-          
-          <div class="faq-content transition-all duration-300 ease-in-out max-h-0">
-            <div class="px-6 pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
-              <p class="mb-4">
-                Automatyzacja to przekazanie powtarzalnych zadań technologii, która wykonuje je za Ciebie. Dzięki temu oszczędzasz czas, redukujesz błędy i zyskujesz setki godzin, które możesz przeznaczyć na rozwój firmy.
-              </p>
-              <p class="text-slate-300 font-medium">
-                W praktyce oznacza to szybsze procesy, niższe koszty i wyższą jakość pracy.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item rounded-2xl transition-all duration-300 group overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md hover:bg-slate-900/60 hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5">
-          
-          <button type="button" class="w-full flex gap-5 focus:outline-none text-left p-6 items-center justify-between" onclick="this.parentElement.querySelector('.faq-content').style.maxHeight = this.parentElement.querySelector('.faq-content').style.maxHeight ? null : this.parentElement.querySelector('.faq-content').scrollHeight + 'px'; this.querySelector('svg').classList.toggle('rotate-180');">
-            <span class="text-base md:text-lg text-slate-200 font-medium pr-4 font-roboto-slab">Czy moje dane są bezpieczne? Kto ma do nich dostęp?</span>
-            <span class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-          </button>
-          
-          <div class="faq-content transition-all duration-300 ease-in-out max-h-0">
-            <div class="px-6 pb-8 pt-2 text-slate-300 leading-relaxed font-light">
-              
-              <p class="mb-8 text-base md:text-lg font-roboto-slab">
-                <strong class="text-teal-400 font-bold">Tak.</strong> Wszystko, co buduję, działa na Twoich kontach (Twój Gmail, Twój CRM, Twoje arkusze). Ja mam dostęp tylko podczas konfiguracji narzędzi i wysyłam gotowe rozwiązanie. Ustawiasz sobie własne hasła, jeśli chcesz, i nie mam żadnego dostępu do danych.
-              </p>
-              
-              <div class="mb-6 flex items-center gap-4">
-                  <span class="text-xs text-slate-500 uppercase tracking-widest font-bold font-kode">Dostępne opcje wdrożenia</span>
-                  <div class="h-px bg-slate-800 flex-grow"></div>
-              </div>
-              
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                
-                <div class="flex flex-col gap-2">
-                  <span class="text-teal-400 font-kode font-bold text-xl md:text-2xl opacity-90">01.</span>
-                  <h4 class="text-white font-medium text-lg font-roboto-slab">
-                    Chmura (Make/n8n)
-                  </h4>
-                  <p class="text-slate-400 text-base leading-relaxed font-roboto-slab">
-                    Automatyzacja działa 24/7, nawet gdy Twój komputer jest wyłączony.
-                  </p>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <span class="text-teal-400 font-kode font-bold text-xl md:text-2xl opacity-90">02.</span>
-                  <h4 class="text-white font-medium text-lg font-roboto-slab">
-                    Serwer lokalny na twoim komputerze
-                  </h4>
-                  <p class="text-slate-400 text-base leading-relaxed font-roboto-slab">
-                    Działa tylko na Twoim sprzęcie. Pełna kontrola, zero opłat za hosting.
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item rounded-2xl transition-all duration-300 group overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md hover:bg-slate-900/60 hover:border-teal-500/30 hover:shadow-lg hover:shadow-teal-500/5">
-          
-          <button type="button" class="w-full flex gap-5 focus:outline-none text-left p-6 items-center justify-between" onclick="this.parentElement.querySelector('.faq-content').style.maxHeight = this.parentElement.querySelector('.faq-content').style.maxHeight ? null : this.parentElement.querySelector('.faq-content').scrollHeight + 'px'; this.querySelector('svg').classList.toggle('rotate-180');">
-            <span class="text-base md:text-lg text-slate-200 font-medium pr-4 font-roboto-slab">Co się dzieje, jeśli automatyzacja przestanie działać?</span>
-            <span class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all">
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
-            </span>
-          </button>
-          
-          <div class="faq-content transition-all duration-300 ease-in-out max-h-0">
-            <div class="px-6 pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
-              <p class="mb-3">
-                Przez pierwsze <span class="text-teal-400 font-semibold">14 dni</span> jestem do Twojej dyspozycji  wszelkie poprawki, naprawy i dopasowania są bezpłatne.
-              </p>
-              <p>
-                Jeśli coś się zepsuje przez np. zbyt dużą ilość danych  naprawiam w ramach wsparcia technicznego.
-              </p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+        <a href="#" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/adam-blasz1/30min'}); return false;"
+            class="shiny-cta mt-4 mobile-link">
+            <span>Umów konsultacje</span>
+        </a>
     </div>
-</section>
-  
-<section id="contact" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 pb-32 border-t border-slate-800/50 bg-[#050810]">
-    <div class="section-fade-top-transparent"></div>
-    <div class="relative">
-      <div class="relative max-w-2xl mx-auto text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-semibold tracking-tight text-white">
-         Masz jeszcze jakiekolwiek pytania ?
-        </h2>
-        <p class="mt-4 text-slate-400 font-light">
-          Pytaj chętnie udziele odpowiedzi 
-        </p>
-      </div>
 
-      <div class="w-full max-w-3xl mx-auto">
-          <div class="md:p-10 bg-[#0a0f1c] border-slate-800 border rounded-[2rem] pt-8 pr-8 pb-8 pl-8 relative shadow-2xl backdrop-blur-sm">
 
-            <form id="contact-form" class="space-y-6">
-              <input type="hidden" name="access_key" value="30440102-a221-4e4e-9e5d-dd2b9efe9a40">
-              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-              <input type="hidden" name="subject" value="Nowe zgłoszenie (Automation Hero)">
+    <!-- Main Hero Section -->
+    <main
+        class="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 min-[1200px]:grid-cols-2 pt-32 sm:pt-40 gap-12 min-[1200px]:gap-0 pb-10">
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                  <label for="name" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Imię</label>
-                  <input type="text" id="name" name="name" required="" placeholder="Jan Kowalski" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
+        <!-- Left Content -->
+        <div class="flex flex-col items-start space-y-8 order-2 lg:order-1 relative z-20">
+            <!-- Background Glow behind text -->
+            <div
+                class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] bg-gradient-to-r from-teal-900/30 via-blue-900/20 to-transparent blur-[100px] -z-10 pointer-events-none">
+            </div>
+
+            <h1
+                class="leading-[1.1] text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight text-shimmer-glow">
+                Automatyzuję to, <br class="hidden sm:inline">
+                czego Twoja <br>
+                firma nie powinna <br>
+                robić
+                <span class="block mt-2 text-teal-400 font-kode font-bold tracking-normal">ręcznie.</span>
+            </h1>
+
+            <p class="text-lg lg:text-lg leading-relaxed font-light text-slate-400 max-w-xl">
+                Pomogę Twojej firmie pracować efektywniej. Buduję dedykowane systemy AI, które wykonują powtarzalne
+                czynności za Ciebie
+                a Ty skupiasz się na biznesie. Wdrażam technologię tam,
+                gdzie realnie oszczędza ona Twój czas i pieniądze.
+            </p>
+
+            <div class="pt-4 flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto relative">
+                <!-- Button Glow Removed -->
+                <a href="#"
+                    onclick="Calendly.initPopupWidget({url: 'https://calendly.com/adam-blasz1/30min'});return false;"
+                    class="shiny-cta w-auto justify-center">
+                    <span>Porozmawiajmy</span>
+                </a>
+
+                <a href="#projects"
+                    class="group flex items-center gap-2 text-slate-300 hover:text-white text-sm font-medium transition-colors px-4 py-2">
+                    Zobacz realizacje
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Content (3D Spline) - Visible only 1200px+ -->
+        <div class="spline-container hidden min-[1200px]:flex order-2 relative items-center justify-end overflow-visible"
+            style="width: 110%; height: 700px; margin-left: -40px; margin-right: -80px;">
+
+            <!-- Glow behind model -->
+            <div
+                class="absolute top-1/2 right-[-80px] -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-teal-500/30 via-blue-600/20 to-transparent blur-[100px] rounded-full -z-10">
+            </div>
+
+            <canvas id="canvas3d" style="width: 100%; height: 100%; outline: none;"></canvas>
+            <script type="module">
+                import { Application } from 'https://unpkg.com/@splinetool/runtime@1.12.57/build/runtime.js';
+                const canvas = document.getElementById('canvas3d');
+                const app = new Application(canvas);
+                app.load('https://prod.spline.design/qc2FmTCt0ar6G0qw/scene.splinecode')
+                    .then(() => {
+                        // Safely attempt to set pixel ratio (API might vary by version)
+                        const renderer = app.renderer || app._renderer;
+                        if (renderer && typeof renderer.setPixelRatio === 'function') {
+                            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                        } else {
+                            console.log('Spline optimization: renderer not accessible, using default.');
+                        }
+                    });
+            </script>
+        </div>
+
+    </main>
+
+    <!-- NEW SECTION: Czym jest automatyzacja -->
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-16 pb-24">
+
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight leading-[1.1] font-roboto-slab">
+                Czym jest automatyzacja<br>
+                i kiedy warto ją wdrożyć?
+            </h2>
+            <p class="text-lg text-slate-400 leading-relaxed font-light">
+                To rozwiązania dla firm, które chcą wyprzedzić konkurencję oraz w pełni wykorzystać potencjał nowych
+                technologii. Oczywiście również oszczędzić mnóstwo czasu.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Card 1 -->
+            <div
+                class="group bg-card border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
+                <div
+                    class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-settings">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
                 </div>
-                <div class="space-y-2">
-                  <label for="email" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Email</label>
-                  <input type="email" id="email" name="email" required="" placeholder="jan@firma.pl" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
+
+                <h3
+                    class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors font-roboto-slab">
+                    Czym jest automatyzacja?</h3>
+
+                <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
+                    <p>
+                        To integracja narzędzi (CRM, e-maile, arkusze kalkulacyjne, formularze, bazy danych,
+                        aplikacje, social media), które wykorzystujesz w codziennej pracy i łączysz je w jeden
+                        spójny system.
+                    </p>
+
+                    <p class="pl-4 border-l-2 border-teal-500/20 italic text-slate-400">
+                        Ktoś wypełnia formularz <span class="text-teal-400">→</span> dane trafiają do bazy danych <span
+                            class="text-teal-400">→</span> wysyłany jest np e-mail powitalny do kilenta <span
+                            class="text-teal-400">→</span>
+                        ustawiane jest przypomnienie „zadzwoń za 2 dni" <span class="text-teal-400">→</span> wszystko
+                        automatycznie.
+                    </p>
+
+                    <p>
+                        Możesz także tworzyć agentów AI, aby pomóc w obsłudze klienta, tworzyć treści na social media ,
+                        a nawet wspierać proces sprzedaży dzięki automatyzacji.
+                    </p>
+
+                    <p class="font-medium text-slate-300">
+                        Nie musisz zatrudniać całego zespołu IT na pełen etat.
+                    </p>
                 </div>
-              </div>
+            </div>
 
-              <div class="space-y-2">
-                <label for="company" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Firma</label>
-                <input type="text" id="company" name="company" placeholder="Nazwa Firmy" class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200">
-              </div>
+            <!-- Card 2 -->
+            <div
+                class="group bg-card border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
+                <div
+                    class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-users">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                </div>
 
-              <div class="space-y-2">
-                <label for="message" class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1">Wiadomość</label>
-                <textarea id="message" name="message" required="" rows="4" placeholder="..." class="w-full bg-[#050810] border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50 transition-all duration-200 resize-none"></textarea>
-              </div>
+                <h3
+                    class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors font-roboto-slab">
+                    Dla kogo to jest?</h3>
 
-              <div class="pt-4">
-                <button type="submit" id="submit-btn" class="shiny-cta w-full group relative flex justify-center items-center overflow-hidden rounded-full bg-[#050810] p-[1px] transition-transform active:scale-95 hover:scale-105 duration-200 shadow-[0_0_20px_rgba(45,212,191,0.3)]">
-                        <span class="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#1e40af_0%,#2dd4bf_15%,#1e40af_30%,transparent_40%,transparent_100%)]"></span>
-                        <span class="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#050810] px-6 py-4 text-sm font-semibold text-white backdrop-blur-3xl">
-                            <span class="absolute inset-0 bg-gradient-to-tr from-transparent via-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-                            <span id="btn-text" class="relative flex items-center gap-2 font-['Roboto_Slab']  tracking-wider text-xs">
-                                Wyśli Wiadomość 
+                <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
+                    <p>
+                        Pracuję z małymi oraz średnimi przedsiębiorstwami wszędzie tam, gdzie panuje chaos i
+                        brakuje czasu na ogarnięcie wszystkiego.
+                    </p>
+
+                    <div>
+                        <p class="mb-2">Najczęściej są to firmy, gdzie:</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-teal-400 mt-1">→</span>
+                                <span>Leady wpadają z wielu miejsc (e-mail, formularz)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-teal-400 mt-1">→</span>
+                                <span>Brakuje czasu na ręczne odpisywanie na zapytania klientów</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-teal-400 mt-1">→</span>
+                                <span>Firma nie ma budżetu na dział IT ani wielomiesięczne wdrożenia</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-4">
+
+                        <p>Jeśli masz 1-20 osób i tracisz czas na wprowadzanie danych, to rozwiązanie jest Dla ciebie
+                        </p>
+                    </div>
+
+                    <p class="font-medium text-slate-300">
+                        Automatyzacja pozwala wrócić do tego, co naprawdę ważne, czyli budowania relacji z klientem i
+                        finalizowania sprzedaży
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+                class="group bg-card border border-slate-800 rounded-3xl p-8 hover:border-teal-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/10 flex flex-col h-full">
+                <div
+                    class="h-14 w-14 bg-slate-800/50 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-check-circle">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <path d="m9 11 3 3L22 4" />
+                    </svg>
+                </div>
+
+                <h3
+                    class="text-2xl font-semibold text-white mb-6 group-hover:text-teal-400 transition-colors font-roboto-slab">
+                    Jakie problemy rozwiązuję?</h3>
+
+                <div class="text-base text-slate-400 leading-relaxed space-y-6 flex-grow">
+                    <p>Z czym najczęściej przychodzą klienci?</p>
+
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
+                            <span class="text-red-400/80 mt-1 shrink-0">✕</span>
+                            <span>"Tracę 2h dziennie na ręczne przepisywanie leadów lub danych z formularzy do
+                                CRM"</span>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
+                            <span class="text-red-400/80 mt-1 shrink-0">✕</span>
+                            <span>"Mam chaos w plikach dane są 3 miejscach i ciągle przęłaczam między
+                                dokumentami"</span>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
+                            <span class="text-red-400/80 mt-1 shrink-0">✕</span>
+                            <span>""Mam 100 zapytań miesięcznie. 80% to te same pytania. Odpowiadam ręcznie na każde
+                                "</span>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-800/50">
+                            <span class="text-red-400/80 mt-1 shrink-0">✕</span>
+                            <span>"Po każdym spotkaniu sprzedażowym muszę sam uzupełniaćnotatki oraz wysłać
+                                podsumowania do klienta "</span>
+                        </li>
+                    </ul>
+
+                    <p class="font-medium text-slate-300 pt-2">
+                        Automatyzacja rozwiązuje te problemy Jesteś w stanie oszczędzić nawet 10 godzin tygodniowo.
+                        Następnie wracasz do tego, co dla Ciebie tak naprawdę się liczy.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION: Process/Collaboration Steps -->
+    <section id="process" class="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 border-t border-slate-800/50">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+
+            <!-- Left Column: Sticky Navigation -->
+            <div class="lg:sticky lg:top-32 lg:h-fit lg:self-start space-y-10">
+                <div class="space-y-4">
+                    <h2
+                        class="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.1] font-roboto-slab">
+                        Jak wygląda<br>
+                        <span class="text-teal-400">współpraca?</span>
+                    </h2>
+                    <p class="text-lg text-slate-400 leading-relaxed max-w-sm font-light">
+                        Od pierwszej rozmowy do działającej automatyzacji w 1-4 tygodnie.
+                    </p>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex flex-col gap-6">
+                    <a href="#step1"
+                        class="group text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent hover:border-teal-500 pl-0 hover:pl-4">
+                        01. Rozmowa
+                    </a>
+                    <a href="#step2"
+                        class="group text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent hover:border-teal-500 pl-0 hover:pl-4">
+                        02. Propozycja i wycena
+                    </a>
+                    <a href="#step3"
+                        class="group text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent hover:border-teal-500 pl-0 hover:pl-4">
+                        03. Wdrożenie
+                    </a>
+                    <a href="#step4"
+                        class="group text-lg font-medium text-slate-500 hover:text-slate-300 transition-all duration-300 border-l-2 border-transparent hover:border-teal-500 pl-0 hover:pl-4">
+                        04. Przekazanie i wsparcie
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Column: Step Cards -->
+            <div class="flex flex-col gap-24 pb-20">
+
+                <!-- Step 1: Rozmowa -->
+                <div id="step1" class="scroll-mt-32 group">
+                    <div
+                        class="bg-card border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:border-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/10">
+
+                        <div class="flex items-start justify-between mb-6">
+                            <div
+                                class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 transition-all duration-300 group-hover:scale-110 group-hover:border-teal-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-message-circle">
+                                    <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-5xl font-bold text-slate-800 select-none transition-colors duration-300 group-hover:text-teal-500/10 font-kode">01</span>
+                        </div>
+
+                        <h3
+                            class="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-teal-400 font-roboto-slab">
+                            Rozmowa
+                        </h3>
+
+                        <p class="text-base text-slate-400 leading-relaxed mb-6 font-light">
+                            Rozmawiamy o tym, jak obecnie pracujesz gdzie tracisz czas, gdzie gubią się leady, co
+                            działa ręcznie, a mogłoby działać automatycznie.<br><br>
+                            Słucham, zadaję pytania i staram się zrozumieć, gdzie automatyzacja naprawdę Ci pomoże. Na
+                            koniec rozmowy powiem wprost: czy mogę pomóc i jak to może wyglądać.
+                        </p>
+
+                        <div class="pt-4 border-t border-slate-800/50">
+                            <span
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-clock">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                                20-30 minut
                             </span>
-                        </span>
-                      </button>
-              </div>
+                        </div>
+                    </div>
 
-              <p id="result-message" class="text-center text-sm font-medium mt-4 h-6 opacity-0 transition-opacity duration-300 text-teal-400">
-              </p>
-            </form>
-          </div>
-      </div>
+                    <!-- Mobile Arrow Separator -->
+                    <div class="flex justify-center text-slate-700 mt-6 lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-down">
+                            <path d="M12 5v14" />
+                            <path d="m19 12-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Step 2: Propozycja i wycena -->
+                <div id="step2" class="scroll-mt-32 group">
+                    <div
+                        class="bg-card border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:border-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/10">
+
+                        <div class="flex items-start justify-between mb-6">
+                            <div
+                                class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 transition-all duration-300 group-hover:scale-110 group-hover:border-teal-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-clipboard-list">
+                                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                                    <path
+                                        d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                                    <path d="M12 11h4" />
+                                    <path d="M12 16h4" />
+                                    <path d="M8 11h.01" />
+                                    <path d="M8 16h.01" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-5xl font-bold text-slate-800 select-none transition-colors duration-300 group-hover:text-teal-500/10 font-kode">02</span>
+                        </div>
+
+                        <h3
+                            class="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-teal-400 font-roboto-slab">
+                            Propozycja i wycena
+                        </h3>
+
+                        <div class="text-base text-slate-400 leading-relaxed mb-6 space-y-4 font-light">
+                            <p>Po rozmowie przygotowuję dla Ciebie dokument z:</p>
+                            <ul class="space-y-1 pl-5 list-disc marker:text-teal-500/50 text-slate-500">
+                                <li>Opisem tego, co zautomatyzujemy (procesy, narzędzia)</li>
+                                <li>Harmonogramem prac (ile to zajmie)</li>
+                                <li>Wyceną</li>
+                            </ul>
+                            <p>Dostajesz jasny plan wiesz dokładnie, co się wydarzy, w jakiej kolejności i ile to
+                                kosztuje. Jeśli coś jest niejasne, doprecyzowujemy. Jeśli wszystko jest OK startujemy.
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-800/50">
+                            <span
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-calendar">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                                    <line x1="16" x2="16" y1="2" y2="6" />
+                                    <line x1="8" x2="8" y1="2" y2="6" />
+                                    <line x1="3" x2="21" y1="10" y2="10" />
+                                </svg>
+                                2-3 dni na przygotowanie
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Arrow Separator -->
+                    <div class="flex justify-center text-slate-700 mt-6 lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-down">
+                            <path d="M12 5v14" />
+                            <path d="m19 12-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Step 3: Wdrożenie -->
+                <div id="step3" class="scroll-mt-32 group">
+                    <div
+                        class="bg-card border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:border-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/10">
+
+                        <div class="flex items-start justify-between mb-6">
+                            <div
+                                class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 transition-all duration-300 group-hover:scale-110 group-hover:border-teal-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-hammer">
+                                    <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
+                                    <path d="M17.64 15 22 10.64" />
+                                    <path
+                                        d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25V2.75A.75.75 0 0 0 18 2h-2.25c-.85 0-1.65.33-2.25.93L12.25 4.19" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-5xl font-bold text-slate-800 select-none transition-colors duration-300 group-hover:text-teal-500/10 font-kode">03</span>
+                        </div>
+
+                        <h3
+                            class="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-teal-400 font-roboto-slab">
+                            Wdrożenie
+                        </h3>
+
+                        <p class="text-base text-slate-400 leading-relaxed mb-6 font-light">
+                            Buduję automatyzację i integruję Twoje narzędzia (CRM, arkusze, maile, formularze). Testuję
+                            wszystko krok po kroku, żeby upewnić się, że działa stabilnie.<br><br>
+                            Co tydzień (lub częściej) dostajesz krótką aktualizację co zrobione, co dalej. Jeśli po
+                            drodze okaże się, że coś trzeba zmienić rozmawiamy o tym i dopasowujemy rozwiązanie.
+                        </p>
+
+                        <div class="pt-4 border-t border-slate-800/50">
+                            <span
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-hourglass">
+                                    <path d="M5 22h14" />
+                                    <path d="M5 2h14" />
+                                    <path
+                                        d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                                </svg>
+                                1-4 tygodnie
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Arrow Separator -->
+                    <div class="flex justify-center text-slate-700 mt-6 lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-down">
+                            <path d="M12 5v14" />
+                            <path d="m19 12-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Step 4: Przekazanie i wsparcie -->
+                <div id="step4" class="scroll-mt-32 group">
+                    <div
+                        class="bg-card border border-slate-800 rounded-3xl p-8 transition-all duration-300 hover:border-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/10">
+
+                        <div class="flex items-start justify-between mb-6">
+                            <div
+                                class="h-14 w-14 bg-slate-900/80 border border-slate-700/50 rounded-2xl flex items-center justify-center text-teal-400 transition-all duration-300 group-hover:scale-110 group-hover:border-teal-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-shield-check">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                                    <path d="m9 12 2 2 4-4" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-5xl font-bold text-slate-800 select-none transition-colors duration-300 group-hover:text-teal-500/10 font-kode">04</span>
+                        </div>
+
+                        <h3
+                            class="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-teal-400 font-roboto-slab">
+                            Przekazanie i wsparcie
+                        </h3>
+
+                        <p class="text-base text-slate-400 leading-relaxed mb-6 font-light">
+                            Pokazuję Ci, jak działa nowa automatyzacja. Dostajesz prostą instrukcję krok po kroku co
+                            robi system i co zrobić, gdyby coś poszło nie tak.<br><br>
+                            <strong>Przez pierwsze 14 dni jesteś chroniony.</strong> Jeśli coś się zepsuje, naprawiam
+                            bez kosztów. Po tym czasie możesz liczyć na wsparcie techniczne lub zostawić system, który
+                            po prostu działa.
+                        </p>
+
+                        <div class="pt-4 border-t border-slate-800/50">
+                            <span
+                                class="inline-flex items-center gap-1.5 text-xs font-medium text-teal-400 bg-teal-500/10 px-3 py-1.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-thumbs-up">
+                                    <path d="M7 10v12" />
+                                    <path
+                                        d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
+                                </svg>
+                                14 dni gwarancji
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Projects (Recent Projects) -->
+    <section id="projects" class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-0 pb-24 border-t border-slate-800/50">
+
+        <h2
+            class="text-4xl md:text-5xl text-center mb-16 tracking-tight text-white font-semibold relative z-20 drop-shadow-2xl font-roboto-slab">
+            Ostatnie Projekty
+        </h2>
+
+        <div class="flex flex-col gap-6 max-w-4xl mx-auto relative">
+
+            <!-- Project Card 1: Email Assistant -->
+            <article data-project="email-assistant"
+                class="project-card group sticky top-24 bg-card hover:bg-gradient-to-br hover:from-card hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+
+                <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+                    <span
+                        class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+                    <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">n8n,
+                        RAG & Gmail API</span>
+                </div>
+
+                <div class="flex justify-between items-end">
+                    <div class="max-w-xl">
+                        <h3
+                            class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors font-roboto-slab">
+                            Inteligentny Asystent Email
+                        </h3>
+                        <p class="text-slate-400 mb-8 font-medium leading-relaxed">
+                            System "wsparcia w tle", który analizuje przychodzące maile i generuje gotowe drafty
+                            odpowiedzi w oparciu o bazę wiedzy firmy.
+                        </p>
+                        <div class="flex gap-12 text-slate-300">
+                            <div class="group-hover:translate-x-2 transition-transform duration-300">
+                                <div class="text-lg font-semibold text-teal-400">Oszczędność</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Czasu 90%</div>
+                            </div>
+                            <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
+                                <div class="text-lg font-semibold text-teal-400">Pełna</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Kontrola</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="project-card-icon bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail w-6 h-6">
+                            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project Card 2: Facebook Scraper -->
+            <article data-project="facebook-scraper"
+                class="project-card group sticky top-28 bg-card hover:bg-gradient-to-br hover:from-card hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+
+                <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+                    <span
+                        class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+                    <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Web
+                        Scraping & AI</span>
+                </div>
+
+                <div class="flex justify-between items-end">
+                    <div class="max-w-xl">
+                        <h3
+                            class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors font-roboto-slab">
+                            Automat Pozyskiwania Ofert
+                        </h3>
+                        <p class="text-slate-400 mb-8 font-medium leading-relaxed">
+                            Agent, który codziennie sprawdza grupy na Facebooku, filtruje oferty sprzedaży i wyciąga
+                            dane kontaktowe do bazy.
+                        </p>
+                        <div class="flex gap-12 text-slate-300">
+                            <div class="group-hover:translate-x-2 transition-transform duration-300">
+                                <div class="text-lg font-semibold text-teal-400">Automatyczna</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Selekcja</div>
+                            </div>
+                            <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
+                                <div class="text-lg font-semibold text-teal-400">Gotowa</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Baza Leadów</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="project-card-icon bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-search w-6 h-6">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project Card 3: Telegram Inventory -->
+            <article data-project="telegram-inventory"
+                class="project-card group sticky top-32 bg-card hover:bg-gradient-to-br hover:from-card hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+
+                <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+                    <span
+                        class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+                    <span
+                        class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Telegram
+                        Bot & AI</span>
+                </div>
+
+                <div class="flex justify-between items-end">
+                    <div class="max-w-xl">
+                        <h3
+                            class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors font-roboto-slab">
+                            Głosowy Asystent Inwentaryzacji
+                        </h3>
+                        <p class="text-slate-400 mb-8 font-medium leading-relaxed">
+                            Bot na Telegramie, który zamienia wiadomości głosowe w strukturalne dane w Google Sheets bez
+                            przepisywania.
+                        </p>
+                        <div class="flex gap-12 text-slate-300">
+                            <div class="group-hover:translate-x-2 transition-transform duration-300">
+                                <div class="text-lg font-semibold text-teal-400">Zero</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Przepisywania</div>
+                            </div>
+                            <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
+                                <div class="text-lg font-semibold text-teal-400">Głosowe</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Dyktowanie</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="project-card-icon bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mic w-6 h-6">
+                            <path d="M12 19v3"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <rect x="9" y="2" width="6" height="13" rx="3"></rect>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project Card 4: Maps Leads -->
+            <article data-project="maps-leads"
+                class="project-card group sticky top-36 bg-card hover:bg-gradient-to-br hover:from-card hover:to-teal-950/20 rounded-3xl p-8 md:p-12 border border-slate-800 hover:border-teal-500/30 shadow-sm hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-500 cursor-pointer transform hover:-translate-y-2">
+
+                <div class="flex justify-between items-start text-sm md:text-base text-slate-400 mb-16">
+                    <span
+                        class="font-medium bg-slate-800/50 group-hover:bg-teal-500/10 group-hover:text-teal-400 px-3 py-1 rounded-full transition-colors">2025</span>
+                    <span class="font-medium flex items-center gap-1 group-hover:text-teal-400 transition-colors">Apify
+                        & Google Maps API</span>
+                </div>
+
+                <div class="flex justify-between items-end">
+                    <div class="max-w-xl">
+                        <h3
+                            class="text-3xl md:text-4xl text-white leading-tight mb-6 font-semibold group-hover:text-teal-400 transition-colors font-roboto-slab">
+                            Automatyczne Leady z Google Maps
+                        </h3>
+                        <p class="text-slate-400 mb-8 font-medium leading-relaxed">
+                            System, który masowo skanuje Google Maps i strony firm, wyciągając telefony, maile i adresy
+                            do Google Sheets.
+                        </p>
+                        <div class="flex gap-12 text-slate-300">
+                            <div class="group-hover:translate-x-2 transition-transform duration-300">
+                                <div class="text-lg font-semibold text-teal-400">Masowa</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Skala</div>
+                            </div>
+                            <div class="group-hover:translate-x-2 transition-transform duration-300 delay-100">
+                                <div class="text-lg font-semibold text-teal-400">Email +</div>
+                                <div class="text-sm text-slate-500 mt-1 font-medium">Telefon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="project-card-icon bg-slate-800/50 p-4 rounded-full text-slate-300 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-slate-700/50 group-hover:border-teal-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-map-pin w-6 h-6">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" role="dialog"
+        aria-modal="true" aria-labelledby="modal-title">
+
+        <!-- Backdrop -->
+        <div class="modal-backdrop absolute inset-0 bg-body/90 backdrop-blur-md transition-opacity duration-300"></div>
+
+        <!-- Modal Content -->
+        <div
+            class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-slate-800 rounded-3xl shadow-2xl shadow-black">
+
+            <!-- Modal Header -->
+            <div
+                class="sticky top-0 z-10 flex justify-between items-center p-6 border-b border-slate-800 bg-card/95 backdrop-blur">
+                <h3 id="modal-title" class="text-2xl md:text-3xl font-semibold text-white font-roboto-slab"></h3>
+                <button id="modal-close-btn"
+                    class="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+                    aria-label="Zamknij modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-8 md:p-12 space-y-10">
+
+                <!-- Description with Tags -->
+                <div>
+                    <div class="flex flex-wrap gap-3 mb-6" id="modal-tags"></div>
+                    <p id="modal-desc" class="text-lg text-slate-300 leading-relaxed font-light"></p>
+                </div>
+
+                <hr class="border-slate-800/50">
+
+                <!-- Problem / Solution / Effect -->
+                <div class="flex flex-col gap-8">
+                    <div class="space-y-3 w-full">
+                        <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Problem</span>
+                        <p id="modal-problem" class="text-base text-slate-400 leading-relaxed"></p>
+                    </div>
+                    <div class="space-y-3 w-full">
+                        <span
+                            class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Rozwiązanie</span>
+                        <p id="modal-solution" class="text-base text-slate-400 leading-relaxed"></p>
+                    </div>
+                    <div class="space-y-3 w-full">
+                        <span class="text-xs uppercase tracking-wider text-teal-400 font-semibold block">Efekt</span>
+                        <p id="modal-effect" class="text-base text-slate-400 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <!-- Screenshot Placeholder -->
+                <!-- Screenshot Container -->
+                <div id="modal-image-container"
+                    class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900/50 min-h-[200px] flex items-center justify-center mt-4 group/image">
+                    <!-- Image will be injected here via JS -->
+                    <span class="text-slate-600 font-mono text-sm">[Wczytywanie zdjęcia...]</span>
+                </div>
+
+                <!-- CTA Link -->
+                <div class="text-center pt-4">
+                    <a href="#contact"
+                        class="modal-link inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors border-b border-teal-500/30 hover:border-teal-400 pb-1">
+                        Zapytaj o podobne wdrożenie
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Lightbox Overlay -->
+            <div id="image-lightbox"
+                class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-xl transition-opacity duration-300"
+                role="dialog" aria-modal="true">
+                <!-- Close Button -->
+                <button id="lightbox-close-btn"
+                    class="absolute top-6 right-6 z-[110] text-slate-400 hover:text-white transition-colors p-2 bg-black/50 rounded-full border border-white/10 hover:bg-slate-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+
+                <!-- Image -->
+                <img id="lightbox-image" src="" alt="Powiększenie"
+                    class="max-w-[95%] max-h-[90vh] object-contain rounded-lg shadow-2xl shadow-teal-500/10" />
+            </div>
+        </div>
     </div>
-  </section>
 
-  <div class="pb-10 text-center text-xs text-slate-600 bg-[#050810]">
-    © 2025 Automation Agency. Wszelkie prawa zastrzeżone.
-  </div>
+    <!-- SECTION: About (O mnie) -->
+    <section id="about" class="relative z-20 w-full py-16 lg:py-24 bg-body">
 
-  <script>
-    // Inicjalizacja ikon Lucide
-    lucide.createIcons();
+        <!-- Top Gradient Fade -->
+        <div
+            class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-body -translate-y-full pointer-events-none">
+        </div>
 
-    // FAQ Accordion Script
-    document.addEventListener('DOMContentLoaded', () => {
-      const faqButtons = document.querySelectorAll('[data-faq-toggle]');
-      
-      faqButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const content = button.nextElementSibling;
-          const icon = button.querySelector('svg');
-          
-          const isOpen = content.style.maxHeight !== '0px';
-          
-          // Opcjonalnie: zamykanie innych
-          document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
-          document.querySelectorAll('[data-faq-toggle] svg').forEach(i => i.style.transform = 'rotate(0deg)');
+        <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
-          if (!isOpen) {
-            content.style.maxHeight = content.scrollHeight + 'px';
-            icon.style.transform = 'rotate(180deg)';
-          }
+            <!-- Photo Column -->
+            <div class="lg:col-span-5 w-full relative order-1">
+                <div
+                    class="relative w-full aspect-[4/5] rounded-3xl overflow-hidden border border-slate-800 bg-card shadow-2xl mx-auto max-w-md lg:max-w-full">
+
+                    <img src="hhh" alt="Adam" class="w-full h-full object-cover object-center" />
+
+                    <!-- Image Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-body via-transparent to-transparent opacity-40">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Content Column -->
+            <div class="lg:col-span-7 flex flex-col space-y-6 text-left order-2">
+
+                <!-- Heading -->
+                <div>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-playfair text-white tracking-tight leading-[1.1]">
+                        Cześć,
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-blue-300 italic pr-2">jestem
+                            Adam.</span>
+                    </h2>
+                </div>
+
+                <!-- Bio Paragraphs -->
+                <div class="space-y-6 text-base md:text-lg leading-relaxed text-slate-400 font-light">
+                    <p>
+                        Z osobowości daleko mi do typowego stereotypu informatyka (nie musisz się martwić) ale pewnego
+                        dnia oczarowały mnie możliwości sztucznej inteligencji. Zrobiłem kilka kursów i to mnie
+                        pochłonęło...
+                    </p>
+
+                    <p>
+                        Myślę, że potrafię zaskoczyć pomysłami na rozwiązanie problemów. Podchodzę do nich holistycznie
+                        mapuję proces, rozkładam go na czynniki pierwsze i dopiero wtedy ruszam do pracy. Słucham
+                        uważnie, co sprawia Ci największy ból, a potem jak to mówią w biznesie – szukam wąskich
+                        gardeł.
+                    </p>
+
+                    <p>
+                        Lubię, kiedy rozwiązania, które wdrażam, naprawdę rozwiązują problemy, a nie tylko automatyzują
+                        dla samej automatyzacji. Chcę wnosić realną wartość do Twojego biznesu.
+                    </p>
+
+                    <p>
+                        Kiedy współpracujemy, rozmawiasz ze mną z osobą, którą fascynują nowe technologie i wie, jak ich
+                        użyć, żeby Twoja firma mogła rosnąć i generować jeszcze większe zyski.
+                    </p>
+
+                    <!-- Private Section -->
+                    <p class="pt-2 border-t border-slate-800/50 mt-4">
+                        <span class="text-slate-300 font-medium">Prywatnie</span> fan polskiej sceny stand-upowej,
+                        aspirujący kowboy oraz entuzjasta treningu siłowego. Zdecydowanie osoba, która uwielbia próbować
+                        nowych aktywności i nie boi się wyzwań.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bottom Gradient Fade -->
+        <div
+            class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-transparent to-body translate-y-full pointer-events-none">
+        </div>
+    </section>
+
+    <!-- SECTION: FAQ (Najczęstsze Pytania) -->
+    <section id="faq"
+        class="relative z-10 w-full max-w-7xl mx-auto px-6 py-16 md:py-24 border-t border-slate-800/50 bg-transparent"
+        aria-labelledby="faq-heading">
+
+        <!-- Subtle Background Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none overflow-hidden"
+            aria-hidden="true">
+            <div class="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-[100px]">
+            </div>
+        </div>
+
+        <!-- Section Badge -->
+        <div class="flex items-center justify-center mb-6 relative z-10">
+            <span
+                class="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide border rounded-full px-3 py-1 text-slate-400 bg-white/5 border-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="text-teal-400" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <path d="M12 17h.01"></path>
+                </svg>
+                Warto wiedzieć
+            </span>
+        </div>
+
+        <!-- Section Header -->
+        <header class="max-w-3xl text-center mx-auto mb-12 md:mb-16 relative z-10">
+            <h2 id="faq-heading"
+                class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white font-roboto-slab">
+                Wszystko, co
+                <span class="italic text-teal-400 pr-2">powinieneś wiedzieć</span>
+            </h2>
+            <p class="mt-4 text-base md:text-lg text-slate-400 font-light font-roboto-slab">
+                zanim zaczniemy współpracę
+            </p>
+        </header>
+
+        <!-- FAQ Content Grid -->
+        <div class="grid gap-8 lg:gap-10 lg:grid-cols-12 items-start relative z-10">
+
+            <!-- CTA Card - Left Column -->
+            <aside class="lg:col-span-5 order-2 lg:order-1">
+                <div
+                    class="relative overflow-hidden rounded-2xl lg:rounded-[2rem] border border-slate-800 bg-card shadow-xl group">
+
+                    <!-- Card Glow -->
+                    <!-- Card Glow Removed -->
+
+
+                    <!-- Image Container -->
+                    <!-- Card Content -->
+                    <div class="relative p-6 md:p-8 text-center">
+                        <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3 font-roboto-slab">
+                            Wolisz porozmawiać?
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-5 md:mb-6 font-medium font-roboto-slab">
+                            zobacz dostępne terminy
+                        </p>
+
+                        <a href="#contact" class="shiny-cta w-full justify-center"
+                            aria-label="Umów konsultacje - otwórz kalendarz">
+                            <span>Umów konsultacje</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- FAQ Accordion - Right Column -->
+            <div class="lg:col-span-7 space-y-3 md:space-y-4 order-1 lg:order-2" role="region"
+                aria-label="Najczęściej zadawane pytania">
+
+                <!-- FAQ Item 1 -->
+                <div
+                    class="faq-item rounded-xl md:rounded-2xl transition-all duration-300 group overflow-hidden border border-slate-800 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 hover:border-teal-500/30">
+
+                    <button type="button"
+                        class="faq-toggle w-full flex gap-4 md:gap-5 text-left p-5 md:p-6 items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                        aria-expanded="false">
+                        <span
+                            class="text-sm sm:text-base md:text-lg text-slate-200 font-medium pr-2 md:pr-4 font-roboto-slab">Skąd
+                            mam wiedzieć, czy automatyzacja w ogóle ma sens w mojej firmie?</span>
+                        <span
+                            class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all"
+                            aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="faq-icon transform transition-transform duration-300 md:w-5 md:h-5">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div class="faq-content transition-all duration-300 ease-in-out max-h-0 overflow-hidden">
+                        <div
+                            class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
+                            <p class="mb-4">Jeśli tracisz więcej niż godzinę dziennie na:</p>
+                            <ul class="space-y-2 mb-4 list-disc pl-5 marker:text-teal-400">
+                                <li>Przepisywanie danych między systemami (np. z maili do CRM)</li>
+                                <li>Ręczne tworzenie tych samych dokumentów/ofert</li>
+                                <li>Odpisywanie na podobne pytania klientów</li>
+                                <li>Szukanie informacji rozrzuconych po różnych miejscach</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div
+                    class="faq-item rounded-xl md:rounded-2xl transition-all duration-300 group overflow-hidden border border-slate-800 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 hover:border-teal-500/30">
+
+                    <button type="button"
+                        class="faq-toggle w-full flex gap-4 md:gap-5 text-left p-5 md:p-6 items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                        aria-expanded="false">
+                        <span
+                            class="text-sm sm:text-base md:text-lg text-slate-200 font-medium pr-2 md:pr-4 font-roboto-slab">Czym
+                            jest automatyzacja?</span>
+                        <span
+                            class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all"
+                            aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="faq-icon transform transition-transform duration-300 md:w-5 md:h-5">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div class="faq-content transition-all duration-300 ease-in-out max-h-0 overflow-hidden">
+                        <div
+                            class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
+                            <p class="mb-4">
+                                Automatyzacja to przekazanie powtarzalnych zadań technologii, która wykonuje je za
+                                Ciebie. Dzięki temu oszczędzasz czas, redukujesz błędy i zyskujesz setki godzin, które
+                                możesz przeznaczyć na rozwój firmy.
+                            </p>
+                            <p class="text-slate-300 font-medium">
+                                W praktyce oznacza to szybsze procesy i wyższą jakość pracy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 - Bezpieczeństwo danych (z opcjami wdrożenia) -->
+                <div
+                    class="faq-item rounded-xl md:rounded-2xl transition-all duration-300 group overflow-hidden border border-slate-800 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 hover:border-teal-500/30">
+
+                    <button type="button"
+                        class="faq-toggle w-full flex gap-4 md:gap-5 text-left p-5 md:p-6 items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                        aria-expanded="false">
+                        <span
+                            class="text-sm sm:text-base md:text-lg text-slate-200 font-medium pr-2 md:pr-4 font-roboto-slab">Czy
+                            moje dane są bezpieczne? Kto ma do nich dostęp?</span>
+                        <span
+                            class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all"
+                            aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="faq-icon transform transition-transform duration-300 md:w-5 md:h-5">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div class="faq-content transition-all duration-300 ease-in-out max-h-0 overflow-hidden">
+                        <div
+                            class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
+
+                            <!-- Main Answer -->
+                            <p class="mb-4 text-sm md:text-base font-roboto-slab">
+                                <strong class="text-teal-400 font-semibold">Tak.</strong> Wszystko, co buduję, działa na
+                                Twoich kontach (Twój Gmail, Twój CRM, Twoje arkusze). Ja mam dostęp tylko podczas
+                                konfiguracji narzędzi i wysyłam gotowe rozwiązanie. Ustawiasz sobie własne hasła, jeśli
+                                chcesz, i nie mam żadnego dostępu do danych.
+                            </p>
+
+                            <!-- Deployment Options Section - Subtler styling -->
+                            <div class="mb-4 flex items-center gap-3 md:gap-4">
+                                <span
+                                    class="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest font-medium font-kode">Dostępne
+                                    opcje wdrożenia</span>
+                                <div class="h-px bg-slate-800 flex-grow"></div>
+                            </div>
+
+                            <!-- Options Grid - Subtler design -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+
+                                <!-- Option 1: Cloud -->
+                                <div class="flex flex-col gap-1.5">
+                                    <span class="text-teal-400/70 font-kode font-medium text-sm md:text-base">01.</span>
+                                    <h4 class="text-white font-medium text-sm md:text-base font-roboto-slab">
+                                        Chmura (Make/n8n)
+                                    </h4>
+                                    <p class="text-slate-400 text-sm leading-relaxed font-roboto-slab">
+                                        Automatyzacja działa 24/7, nawet gdy Twój komputer jest wyłączony.
+                                    </p>
+                                </div>
+
+                                <!-- Option 2: Local Server -->
+                                <div class="flex flex-col gap-1.5">
+                                    <span class="text-teal-400/70 font-kode font-medium text-sm md:text-base">02.</span>
+                                    <h4 class="text-white font-medium text-sm md:text-base font-roboto-slab">
+                                        Serwer lokalny na twoim komputerze
+                                    </h4>
+                                    <p class="text-slate-400 text-sm leading-relaxed font-roboto-slab">
+                                        Działa tylko na Twoim sprzęcie. Pełna kontrola, zero opłat za hosting.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div
+                    class="faq-item rounded-xl md:rounded-2xl transition-all duration-300 group overflow-hidden border border-slate-800 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 hover:border-teal-500/30">
+
+                    <button type="button"
+                        class="faq-toggle w-full flex gap-4 md:gap-5 text-left p-5 md:p-6 items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                        aria-expanded="false">
+                        <span
+                            class="text-sm sm:text-base md:text-lg text-slate-200 font-medium pr-2 md:pr-4 font-roboto-slab">Co
+                            się dzieje, jeśli automatyzacja przestanie działać?</span>
+                        <span
+                            class="flex-shrink-0 bg-slate-800/50 p-2 rounded-full border border-slate-700 text-slate-400 group-hover:text-teal-400 group-hover:border-teal-500/50 transition-all"
+                            aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="faq-icon transform transition-transform duration-300 md:w-5 md:h-5">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div class="faq-content transition-all duration-300 ease-in-out max-h-0 overflow-hidden">
+                        <div
+                            class="px-5 md:px-6 pb-5 md:pb-6 pt-0 text-slate-400 leading-relaxed font-light text-sm md:text-base">
+                            <p class="mb-3">
+                                Przez pierwsze <span class="text-teal-400 font-semibold">14 dni</span> jestem do Twojej
+                                dyspozycji wszelkie poprawki, naprawy i dopasowania są bezpłatne.
+                            </p>
+                            <p>
+                                Jeśli coś się zepsuje przez np. zbyt dużą ilość danych naprawiam w ramach wsparcia
+                                technicznego.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION: Contact Form -->
+    <section id="contact"
+        class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 pb-32 border-t border-slate-800/50 bg-body"
+        aria-labelledby="contact-heading">
+
+        <div class="relative">
+            <!-- Nagłówek -->
+            <header class="relative max-w-2xl mx-auto text-center mb-12">
+                <h2 id="contact-heading"
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white font-roboto-slab">
+                    Masz jeszcze jakiekolwiek pytania?
+                </h2>
+                <p class="mt-4 text-slate-400 font-light font-roboto-slab">
+                    Pytaj chętnie udzielę odpowiedzi
+                </p>
+            </header>
+
+            <!-- Form Container -->
+            <div class="w-full max-w-3xl mx-auto">
+                <div
+                    class="bg-card border border-slate-800 rounded-[2rem] p-8 md:p-10 relative shadow-2xl backdrop-blur-sm">
+
+                    <!-- Formularz -->
+                    <form id="contact-form" class="space-y-6" novalidate>
+                        <!-- Web3Forms Hidden Fields -->
+                        <input type="hidden" name="access_key" value="30440102-a221-4e4e-9e5d-dd2b9efe9a40">
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1"
+                            aria-hidden="true">
+                        <input type="hidden" name="subject" value="Nowe zgłoszenie (Automation Hero)">
+
+                        <!-- Name + Email Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="contact-name"
+                                    class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1 font-roboto-slab">
+                                    Imię
+                                </label>
+                                <input type="text" id="contact-name" name="name" required autocomplete="name"
+                                    placeholder="Jan Kowalski" aria-required="true"
+                                    class="w-full bg-body border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 font-roboto-slab text-sm transition-all duration-200 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="contact-email"
+                                    class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1 font-roboto-slab">
+                                    Email
+                                </label>
+                                <input type="email" id="contact-email" name="email" required autocomplete="email"
+                                    placeholder="jan@firma.pl" aria-required="true"
+                                    class="w-full bg-body border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 font-roboto-slab text-sm transition-all duration-200 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50">
+                            </div>
+                        </div>
+
+                        <!-- Company -->
+                        <div class="space-y-2">
+                            <label for="contact-company"
+                                class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1 font-roboto-slab">
+                                Firma
+                            </label>
+                            <input type="text" id="contact-company" name="company" autocomplete="organization"
+                                placeholder="Nazwa Firmy"
+                                class="w-full bg-body border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 font-roboto-slab text-sm transition-all duration-200 focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50">
+                        </div>
+
+                        <!-- Message -->
+                        <div class="space-y-2">
+                            <label for="contact-message"
+                                class="text-xs uppercase tracking-wider font-medium text-slate-500 ml-1 font-roboto-slab">
+                                Wiadomość
+                            </label>
+                            <textarea id="contact-message" name="message" required rows="4" placeholder="..."
+                                aria-required="true"
+                                class="w-full bg-body border border-slate-800 rounded-xl px-5 py-3 text-slate-200 placeholder-slate-600 font-roboto-slab text-sm transition-all duration-200 resize-none focus:outline-none focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/50"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" id="contact-submit-btn" class="shiny-cta w-full">
+                                <span id="contact-btn-text">
+                                    Wyślij Wiadomość
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Result Message -->
+                        <p id="contact-result"
+                            class="text-center text-sm font-medium mt-4 h-6 opacity-0 transition-opacity duration-300 text-teal-400"
+                            aria-live="polite" role="status">
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pb-10 text-center text-xs text-slate-600 bg-body font-roboto-slab">
+        <p>&copy; 2026 Automation Agency. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+        // Init Lucide icons
+        lucide.createIcons();
+
+        // ============================================
+        // FAQ ACCORDION FUNCTIONALITY
+        // ============================================
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', function () {
+                const faqItem = this.closest('.faq-item');
+                const content = faqItem.querySelector('.faq-content');
+                const icon = this.querySelector('.faq-icon');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                // Toggle aria-expanded
+                this.setAttribute('aria-expanded', !isExpanded);
+
+                // Toggle content height
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+
+                // Rotate icon
+                icon.classList.toggle('rotate-180');
+            });
         });
-      });
-    });
 
-    // LOGIKA WEB3FORMS (Bez przeładowania strony)
-    const form = document.getElementById('contact-form');
-    const result = document.getElementById('result-message');
-    const submitBtn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
+        // ============================================
+        // PROJECTS DATA
+        // ============================================
+        const projectsData = {
+            'email-assistant': {
+                title: 'Inteligentny Asystent Email',
+                desc: 'System „wsparcia w tle", które przetwarza przychodzące e-maile i tworzy gotowe szkice odpowiedzi na podstawie bazy wiedzy firmy. Nie wysyła wiadomości automatycznie  masz pełną kontrolę nad każdą odpowiedzią.',
+                tags: ['n8n', 'RAG', 'Gmail API', 'Vector Store'],
+                problem: 'Ręczne odpowiadanie na powtarzające się zapytania klientów znacznie redukuje czas pracy. Gotowe szablony „kopiuj-wklej" brzmią sztucznie i nie odpowiadają na specyficzne potrzeby zawarte w wiadomości.',
+                solution: 'System ocenia treść każdego przychodzącego e-maila, przeszukuje bazę wiedzy firmy (cenniki, procedury, FAQ), która została załadowana, i generuje merytoryczną odpowiedź. Odpowiedź odnosi się do konkretnych pytań i używa naturalnego, ludzkiego tonu.',
+                effect: 'Logujesz się do swojego e-maila rano i znajdujesz gotowe odpowiedzi czekające w folderze „wersje Robocze". Przeglądasz je, wprowadzasz drobne poprawki, jeśli to konieczne, i klikasz „Wyślij". Oszczędzasz 80-90% swojego czasu, zachowując pełną kontrolę nad komunikacją.',
+                image: 'e-mail.webp'
+            },
+            'facebook-scraper': {
+                title: 'Automat Pozyskiwania Ofert',
+                desc: 'Bot, który codziennie o ustalonej porze przeszukuje określone grupy na Facebooku, automatycznie odrzuca ogłoszenia o wynajmie i zapisuje oferty sprzedaży wraz z informacjami kontaktowymi do bazy danych.',
+                tags: ['Facebook API', 'Web Scraping', 'Airtable', 'n8n'],
+                problem: 'Agenci nieruchomości spędzają godziny na ręcznym przeszukiwaniu setek grup na Facebooku, próbując wyłowić oferty sprzedaży mieszkań spośród tysięcy ogłoszeń o wynajmie i spamu. W tym natłoku łatwo przeoczyć cenną okazję.',
+                solution: 'Bot przeszukuje określone grupy na FB każdego ranka. Automatycznie odrzuca wszystko, co związane z wynajmem, i skupia się tylko na sprzedaży. "Czyta" posty i wyciąga: numer telefonu, link do ogłoszenia, treść opisu. Dane trafiają do tabeli .',
+                effect: 'Agent zaczyna dzień z gotową listą nowych potencjalnych klientów do kontaktu. Zamiast szukać igły w stogu siana, otrzymuje tylko te ogłoszenia, które mogą realnie przynieść zysk. Oszczędność czasu i większa skuteczność.',
+                image: 'Fb_scraper.webp'
+            },
+            'telegram-inventory': {
+                title: 'Głosowy Asystent Inwentaryzacji',
+                desc: 'Bot na Telegramie, który przetwarza wiadomości głosowe i przekształca je w uporządkowane dane w arkuszu kalkulacyjnym. Nie musisz nic pisać  po prostu mówisz do telefonu to, co zanotowałeś w magazynie.',
+                tags: ['Telegram Bot API', 'Speech-to-Text', 'Google Sheets'],
+                problem: 'Inwentaryzacja w restauracji, magazynie czy sklepie to dużo podwójnej pracy: zapisujesz braki na papierze podczas obchodu, a potem idziesz do komputera i spędzasz godzinę na przepisywaniu wszystkiego do Excela. To strata czasu i źródło błędów.',
+                solution: 'Przechadzasz się po magazynie i mówisz do telefonu: „Zostało 5 kartonów mleka, 3 kilo kurczaka, musimy zamówić więcej pomidorów." System robi resztę sam: bierze nagranie i formatuje je na tekst, rozpoznaje produkty, ilości i umieszcza dane w odpowiednich kolumnach Arkuszy Google.',
+                effect: 'Inwentaryzacja kończy się w momencie wysłania ostatniej wiadomości na Telegramie. Nie ma siedzenia przy komputerze ani przepisywania, więc dane są od razu w systemie. Oszczędność czasu i eliminacja błędów.',
+                image: 'inwetaryzacja .webp'
+            },
+            'maps-leads': {
+                title: 'Automatyczne Leady z Google Maps',
+                desc: 'System, który przeszukuje Google Maps i strony firmowe, zbierając numery telefonów, e-maile i adresy. Następnie wszystko trafia automatycznie do Arkuszy Google  gotowej bazy danych do cold call lub cold e-mail',
+                tags: ['Apify', 'Google Maps', 'Web Scraping', 'Google Sheets'],
+                problem: 'Żmudne zadanie ręcznego wyszukiwania klientów B2B jest takie samo jak wszędzie indziej na świecie: Wchodzisz na Google Maps, wpisujesz „restauracje Gdańsk", klikasz na każdą pozycję i kopiujesz numer telefonu do Excela. Zajmuje to dużo czasu, a często brakuje e-maila w ogłoszeniach.',
+                solution: 'Definiujesz cel: „Znajdź wszystkie restauracje w Gdańsku." Jak działa system: skanuje mapy i wyciąga podstawowe dane (nazwa, numer telefonu, adres), następnie odwiedza strony internetowe każdej firmy i odczytuje e-maile, zapisując kompletne dane w uporządkowanym arkuszu (Arkusze Google).',
+                effect: 'Zamiast tracić czas na research, zespół sprzedaży będzie miał gotową listę potencjalnych klientów. Proces można ustawić tak, aby działał codziennie w tle, zmieniając wyłącznie przeszukiwany region.',
+                image: 'leady_web.webp'
+            }
+        };
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Zmiana tekstu przycisku na czas wysyłki
-      const originalText = btnText.innerText;
-      btnText.innerText = "Wysyłanie...";
-      submitBtn.disabled = true;
+        // ============================================
+        // MODAL FUNCTIONALITY
+        // ============================================
+        const modal = document.getElementById('project-modal');
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const projectCards = document.querySelectorAll('.project-card');
 
-      const formData = new FormData(form);
-      const object = Object.fromEntries(formData);
-      const json = JSON.stringify(object);
+        // Open Modal Function
+        function openModal(projectId) {
+            const data = projectsData[projectId];
+            if (!data) return;
 
-      result.innerHTML = "";
-      result.classList.remove('opacity-100');
-      result.classList.add('opacity-0');
+            // Populate modal content
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-desc').textContent = data.desc;
+            document.getElementById('modal-problem').textContent = data.problem;
+            document.getElementById('modal-solution').textContent = data.solution;
+            document.getElementById('modal-effect').textContent = data.effect;
 
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: json
-      })
-      .then(async (response) => {
-        let json = await response.json();
-        if (response.status == 200) {
-          result.innerHTML = "Wiadomość wysłana pomyślnie!";
-          result.classList.remove('text-red-500');
-          result.classList.add('text-teal-400');
-          result.classList.remove('opacity-0');
-          result.classList.add('opacity-100');
-          form.reset(); // Czyści formularz
-        } else {
-          console.log(response);
-          result.innerHTML = json.message;
-          result.classList.remove('text-teal-400');
-          result.classList.add('text-red-500');
-          result.classList.remove('opacity-0');
-          result.classList.add('opacity-100');
+            // Populate tags
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = '';
+            data.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'bg-slate-800/50 text-teal-400 px-3 py-1 rounded-full text-xs font-medium border border-teal-500/20';
+                span.textContent = tag;
+                tagsContainer.appendChild(span);
+            });
+
+            // Populate Image
+            const imageContainer = document.getElementById('modal-image-container');
+            if (data.image) {
+                imageContainer.innerHTML = `
+                    <div onclick="openLightbox('${data.image}')" class="cursor-zoom-in block w-full h-full relative group/link" role="button" aria-label="Powiększ zdjęcie">
+                         <img src="${data.image}" alt="${data.title}" 
+                             class="w-full h-auto max-h-[500px] object-contain mx-auto rounded-lg shadow-lg transform group-hover/link:scale-[1.01] transition-transform duration-300">
+                         <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                             <span class="text-white font-medium px-4 py-2 bg-black/60 rounded-full backdrop-blur-sm border border-white/10">
+                                 Kliknij, aby powiększyć
+                             </span>
+                         </div>
+                    </div>
+                `;
+                imageContainer.classList.remove('hidden');
+            } else {
+                imageContainer.innerHTML = ''; // Clear if no image
+                imageContainer.classList.add('hidden');
+            }
+
+            // Show modal
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Focus close button for accessibility
+            setTimeout(() => modalCloseBtn.focus(), 100);
         }
-      })
-      .catch(error => {
-        console.log(error);
-        result.innerHTML = "Wystąpił błąd. Spróbuj ponownie później.";
-        result.classList.remove('text-teal-400');
-        result.classList.add('text-red-500');
-        result.classList.remove('opacity-0');
-        result.classList.add('opacity-100');
-      })
-      .finally(() => {
-        // Przywrócenie przycisku
-        btnText.innerText = originalText;
-        submitBtn.disabled = false;
-        
-        // Ukrycie komunikatu po 5 sekundach
-        setTimeout(() => {
-          result.classList.remove('opacity-100');
-          result.classList.add('opacity-0');
-        }, 5000);
-      });
-    });
-  </script>
-  
-  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
+        // Close Modal Function
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            // Check if lightbox is open before resetting overflow, but lightbox manages its own overflow usually
+            // Here we assume if modal is closed, we want auto overflow unless lightbox is open.
+            // But lightbox is higher z-index.
+            if (lightbox.classList.contains('hidden')) {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Event Listeners for Project Cards
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.getAttribute('data-project');
+                openModal(projectId);
+            });
+
+            // Keyboard accessibility for cards
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const projectId = card.getAttribute('data-project');
+                    openModal(projectId);
+                }
+            });
+        });
+
+        // Close modal on close button click
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Close modal on backdrop click
+        modalBackdrop.addEventListener('click', closeModal);
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            // Check if Lightbox is open - if so, do NOTHING here, let the lightbox listener handle it
+            if (!lightbox.classList.contains('hidden')) return;
+
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // Close modal when clicking internal link
+        document.querySelector('.modal-link')?.addEventListener('click', closeModal);
+
+        // ============================================
+        // MOBILE MENU LOGIC
+        // ============================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        const nav = document.getElementById('main-nav');
+        let isMobileMenuOpen = false;
+
+        const scrolledClasses = ['bg-body/80', 'backdrop-blur-md', 'shadow-lg'];
+
+        function applyScrolledStyles() {
+            nav.classList.add(...scrolledClasses);
+            nav.classList.remove('py-6');
+            nav.classList.add('py-4');
+        }
+
+        function removeScrolledStyles() {
+            nav.classList.remove(...scrolledClasses, 'py-4');
+            nav.classList.add('py-6');
+        }
+
+        function openMobileMenu() {
+            isMobileMenuOpen = true;
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            hamburgerIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            removeScrolledStyles();
+        }
+
+        function closeMobileMenu() {
+            isMobileMenuOpen = false;
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+            if (window.scrollY > 20) {
+                applyScrolledStyles();
+            }
+        }
+
+        // Toggle Menu
+        mobileMenuBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (isMobileMenuOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        // Close menu on link click
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                closeMobileMenu();
+            });
+        });
+
+        // Close menu on X button click
+        document.getElementById('mobile-menu-close').addEventListener('click', function () {
+            closeMobileMenu();
+        });
+
+        // Sticky Navbar Scroll Effect
+        window.addEventListener('scroll', function () {
+            if (isMobileMenuOpen) return;
+            if (window.scrollY > 20) {
+                applyScrolledStyles();
+            } else {
+                removeScrolledStyles();
+            }
+        });
+
+        // ============================================
+        // WEB3FORMS CONTACT FORM
+        // ============================================
+        const contactForm = document.getElementById('contact-form');
+        const contactResult = document.getElementById('contact-result');
+        const contactSubmitBtn = document.getElementById('contact-submit-btn');
+        const contactBtnText = document.getElementById('contact-btn-text');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const originalText = contactBtnText.textContent;
+                contactBtnText.textContent = 'Wysyłanie...';
+                contactSubmitBtn.disabled = true;
+                contactSubmitBtn.setAttribute('aria-busy', 'true');
+
+                const formData = new FormData(contactForm);
+                const json = JSON.stringify(Object.fromEntries(formData));
+
+                contactResult.textContent = '';
+                contactResult.classList.remove('opacity-100');
+                contactResult.classList.add('opacity-0');
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                })
+                    .then(async (response) => {
+                        const data = await response.json();
+                        if (response.status === 200) {
+                            contactResult.textContent = 'Wiadomość wysłana pomyślnie!';
+                            contactResult.classList.remove('text-red-500');
+                            contactResult.classList.add('text-teal-400');
+                            contactForm.reset();
+                        } else {
+                            contactResult.textContent = data.message || 'Wystąpił błąd.';
+                            contactResult.classList.remove('text-teal-400');
+                            contactResult.classList.add('text-red-500');
+                        }
+                        contactResult.classList.remove('opacity-0');
+                        contactResult.classList.add('opacity-100');
+                    })
+                    .catch(() => {
+                        contactResult.textContent = 'Wystąpił błąd. Spróbuj ponownie później.';
+                        contactResult.classList.remove('text-teal-400');
+                        contactResult.classList.add('text-red-500');
+                        contactResult.classList.remove('opacity-0');
+                        contactResult.classList.add('opacity-100');
+                    })
+                    .finally(() => {
+                        contactBtnText.textContent = originalText;
+                        contactSubmitBtn.disabled = false;
+                        contactSubmitBtn.removeAttribute('aria-busy');
+
+                        setTimeout(() => {
+                            contactResult.classList.remove('opacity-100');
+                            contactResult.classList.add('opacity-0');
+                        }, 5000);
+                    });
+            });
+        }
+
+        // ============================================
+        // LIGHTBOX FUNCTIONALITY
+        // ============================================
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-image');
+        const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            // Ensure lightbox is above everything
+            lightbox.style.zIndex = '100';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            setTimeout(() => {
+                lightboxImg.src = '';
+            }, 300); // Clear after fade out
+        }
+
+        // Close logic
+        lightboxCloseBtn?.addEventListener('click', closeLightbox);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Update Esc listener to handle lightbox priority
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!lightbox.classList.contains('hidden')) {
+                    closeLightbox();
+                    e.stopImmediatePropagation(); // Stop modal from closing
+                } else if (!modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            }
+        });
+
+    </script>
 </body>
+
 </html>
